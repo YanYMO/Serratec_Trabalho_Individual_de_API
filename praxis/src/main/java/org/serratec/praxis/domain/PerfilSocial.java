@@ -1,5 +1,7 @@
 package org.serratec.praxis.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +14,7 @@ import org.serratec.praxis.enums.RendaFamiliar;
 public class PerfilSocial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @NotNull(message = "O campo precisa ser preenchido")
@@ -28,6 +31,10 @@ public class PerfilSocial {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "renda_familiar", nullable = false)
     private RendaFamiliar rendaFamiliar;
+
+    @OneToOne(mappedBy = "perfilSocial")
+    @JsonBackReference
+    private Aluno aluno;
 
     public PerfilSocial(Long id, Genero genero, NivelEscolaridade escolaridade, RendaFamiliar rendaFamiliar) {
         this.id = id;

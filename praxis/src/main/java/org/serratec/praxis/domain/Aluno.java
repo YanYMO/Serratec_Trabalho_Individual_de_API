@@ -1,6 +1,7 @@
 package org.serratec.praxis.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
@@ -39,6 +40,7 @@ public class Aluno {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "perfil_social_id")
+    @JsonManagedReference
     private PerfilSocial perfilSocial;
 
     @OneToMany(mappedBy = "aluno")

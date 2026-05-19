@@ -2,6 +2,7 @@ package org.serratec.praxis.service;
 
 import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.dto.AlunoResponseDTO;
+import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,16 @@ public class AlunoService {
         for (Aluno aluno : alunos) {
             alunosDTO.add(new AlunoResponseDTO(aluno));
         }
-
         return alunosDTO;
+    }
+
+    @GetMapping("/{id}")
+    public AlunoResponseDTO findById (Long id) {
+        Aluno aluno = alunoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
+
+        AlunoResponseDTO alunoDTO = new AlunoResponseDTO(aluno);
+        return alunoDTO;
     }
 }
 

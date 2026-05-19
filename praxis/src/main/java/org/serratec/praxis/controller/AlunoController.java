@@ -31,23 +31,16 @@ public class AlunoController {
 
     @GetMapping
     @Operation(summary = "Lista todos os Alunos", description = "A resposta lista os alunos cadastrados.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(type = "array", implementation = Aluno.class), mediaType = "application/json")}, description = "Retorna todos os clientes"),
-            @ApiResponse(responseCode = "401", description = "Erro de autenticação"),
-            @ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
-            @ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
-            @ApiResponse(responseCode = "505", description = "Exceção interna da aplicação")})
     public ResponseEntity<List<AlunoResponseDTO>> listar() {
         return ResponseEntity.ok(alunoService.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca Aluno por ID", description = "A resposta é o Aluno referente ao ID passado.")
-    public ResponseEntity<Aluno> buscarPorId(@PathVariable Long id) {
-        Aluno aluno = alunoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
+    public ResponseEntity<AlunoResponseDTO> buscarPorId(@PathVariable Long id) {
+        AlunoResponseDTO alunoDTO = alunoService.findById(id);
 
-        return ResponseEntity.ok(aluno);
+        return ResponseEntity.ok(alunoDTO);
     }
 
     @PostMapping
