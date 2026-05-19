@@ -47,9 +47,42 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-                                                                  HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
 
-        return ResponseEntity.badRequest().body(ex.getMessage());
+        ErroResposta erroResposta = new ErroResposta(
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now(),
+                new ArrayList<>()
+        );
+
+        return ResponseEntity.badRequest().body(erroResposta);
+    }
+
+    @ExceptionHandler(EmailException.class)
+    protected ResponseEntity<ErroResposta> handleEmailException(EmailException ex) {
+
+
+        ErroResposta erroResposta = new ErroResposta(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                ex.getMessage(),
+                LocalDateTime.now(),
+                new ArrayList<>()
+        );
+
+        return ResponseEntity.unprocessableEntity().body(erroResposta);
+    }
+
+    @ExceptionHandler(CpfException.class)
+    protected ResponseEntity<ErroResposta> handleCpfException(CpfException ex) {
+
+        ErroResposta erroResposta = new ErroResposta(
+                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                ex.getMessage(),
+                LocalDateTime.now(),
+                new ArrayList<>()
+        );
+
+        return ResponseEntity.unprocessableEntity().body(erroResposta);
     }
 }

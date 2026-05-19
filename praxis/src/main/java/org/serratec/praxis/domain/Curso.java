@@ -30,7 +30,7 @@ public class Curso {
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Past
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "data_de_inicio", nullable = false)
     private LocalDate dataInicio;
 

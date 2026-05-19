@@ -1,5 +1,6 @@
 package org.serratec.praxis.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
@@ -26,6 +27,7 @@ public class Professor {
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Past
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
 

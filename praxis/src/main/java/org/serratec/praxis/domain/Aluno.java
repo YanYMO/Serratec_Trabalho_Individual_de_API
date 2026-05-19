@@ -23,12 +23,12 @@ public class Aluno {
 
     @NotBlank(message = "O campo precisa ser preenchido")
     @CPF
-    @Column(name = "cpf", nullable = false)
+    @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Past
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "data_de_inicio", nullable = false)
     private LocalDate dataNascimento;
 

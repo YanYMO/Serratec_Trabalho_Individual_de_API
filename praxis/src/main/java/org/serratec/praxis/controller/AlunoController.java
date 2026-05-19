@@ -1,13 +1,11 @@
 package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.dto.AlunoResponseDTO;
+import org.serratec.praxis.dto.AlunoUpdateDTO;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.AlunoRepository;
 import org.serratec.praxis.service.AlunoService;
@@ -15,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,22 +44,29 @@ public class AlunoController {
     }
 
     @PostMapping
-    @Operation(summary = "Cadastra um novo Aluno", description = "A resposta é uma cópia dos dados que foram cadastrados.")
+    @Operation(summary = "Cadastra um novo Aluno", description = "A resposta é uma cópia dos dados se forem cadastrados.")
     public ResponseEntity<Aluno> cadastrar(@Valid @RequestBody Aluno aluno) {
-        alunoRepository.save(aluno);
-        return ResponseEntity.status(HttpStatus.CREATED).body(aluno);
+
+        aluno = alunoService.cadastrar(aluno);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                        .path("/{id}").buildAndExpand(aluno.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(aluno);
     }
 
-    @DeleteMapping("/{îd}")
-    public ResponseEntity<Aluno> deletar(@PathVariable Long id) {
-        Optional aluno = alunoRepository.findById(id);
-
-        if (aluno.isEmpty()) {
-            throw new ResourceNotFoundException("Não encontramos um Aluno com esse identificador.");
-        }
-        alunoRepository.deleteById(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<Aluno> atualizar(@Valid @PathVariable Long id, @RequestBody AlunoUpdateDTO alunoDTO) {
+        alunoService.atualizar(id, alunoDTO);
 
         return ResponseEntity.ok().build();
     }
-}
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable Long id) {
+        alunoService.deletarPorId(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+}
