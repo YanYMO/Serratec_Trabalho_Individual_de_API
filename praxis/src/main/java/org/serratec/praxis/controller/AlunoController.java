@@ -7,8 +7,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.serratec.praxis.domain.Aluno;
+import org.serratec.praxis.dto.AlunoResponseDTO;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.AlunoRepository;
+import org.serratec.praxis.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ public class AlunoController {
     @Autowired
     private AlunoRepository alunoRepository;
 
+    @Autowired
+    private AlunoService alunoService;
+
     @GetMapping
     @Operation(summary = "Lista todos os Alunos", description = "A resposta lista os alunos cadastrados.")
     @ApiResponses(value = {
@@ -32,13 +37,8 @@ public class AlunoController {
             @ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
             @ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
             @ApiResponse(responseCode = "505", description = "Exceção interna da aplicação")})
-    public ResponseEntity<List<Aluno>> listar() {
-        List<Aluno> alunos = alunoRepository.findAll();
-
-        if (alunos.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(alunos);
+    public ResponseEntity<List<AlunoResponseDTO>> listar() {
+        return ResponseEntity.ok(alunoService.findAll());
     }
 
     @GetMapping("/{id}")
