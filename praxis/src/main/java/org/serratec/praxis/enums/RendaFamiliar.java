@@ -1,5 +1,8 @@
 package org.serratec.praxis.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import org.serratec.praxis.exception.EnumValidationException;
+
 public enum RendaFamiliar {
     CLASSE_E(1, "Até 1.580 reais"),
     CLASSE_D(2, "Entre 1.581 e 2.525"),
@@ -10,9 +13,20 @@ public enum RendaFamiliar {
     private Integer codigo;
     private String rendaFamiliar;
 
-    RendaFamiliar(Integer codigo, String rendaFamiliar) {
+    private RendaFamiliar(Integer codigo, String rendaFamiliar) {
         this.codigo = codigo;
         this.rendaFamiliar = rendaFamiliar;
+    }
+
+    @JsonCreator
+    public static RendaFamiliar verifica(Integer value) throws EnumValidationException {
+        for (RendaFamiliar r : values()) {
+            if (value.equals(r.getCodigo())) {
+                return r;
+            }
+        }
+        throw new EnumValidationException(
+                "Renda Inválida. Valores válidos: 1 - Até 1.580 reais, 2 - Entre 1.581 e 2.525, 3 - Entre 2.526 e 10.885, 4 - Entre 10.886 e 25.000, 5 - Acima de 25.000.");
     }
 
     public Integer getCodigo() {

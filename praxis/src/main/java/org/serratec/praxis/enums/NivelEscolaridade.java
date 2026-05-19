@@ -1,5 +1,8 @@
 package org.serratec.praxis.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import org.serratec.praxis.exception.EnumValidationException;
+
 public enum NivelEscolaridade {
     ENSINO_FUNDAMENTAL_INCOMPLETO(1, "Fundamental Imcompleto"),
     ENSINO_FUNDAMENTAL_COMPLETO(2, "Fundamental Completo"),
@@ -14,6 +17,17 @@ public enum NivelEscolaridade {
     private NivelEscolaridade(Integer codigo, String nivel) {
         this.codigo = codigo;
         this.nivel = nivel;
+    }
+
+    @JsonCreator
+    public static NivelEscolaridade verifica(Integer value) throws EnumValidationException {
+        for (NivelEscolaridade n : values()) {
+            if (value.equals(n.getCodigo())) {
+                return n;
+            }
+        }
+        throw new EnumValidationException(
+                "Escolaridade Inválida. Valores válidos: 1 - Fundamental Imcompleto, 2 - Fundamental Completo, 3 - Médio Imcompleto, 4 - Medio Completo, 5 - Superior Imcompleto, 6 - Superior Completo");
     }
 
     public Integer getCodigo() {

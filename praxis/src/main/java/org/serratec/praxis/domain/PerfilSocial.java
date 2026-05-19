@@ -2,6 +2,7 @@ package org.serratec.praxis.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.serratec.praxis.enums.Genero;
 import org.serratec.praxis.enums.NivelEscolaridade;
 import org.serratec.praxis.enums.RendaFamiliar;
@@ -13,21 +14,60 @@ public class PerfilSocial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O campo precisa ser preenchido")
+    @NotNull(message = "O campo precisa ser preenchido")
     @Enumerated(EnumType.STRING)
     @Column(name = "genero", nullable = false)
     private Genero genero;
 
-    @NotBlank(message = "O campo precisa ser preenchido")
+    @NotNull(message = "O campo precisa ser preenchido")
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "nivel_de_escolariade", nullable = false)
     private NivelEscolaridade escolaridade;
 
-    @NotBlank(message = "O campo precisa ser preenchido")
+    @NotNull(message = "O campo precisa ser preenchido")
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "renda_familiar", nullable = false)
     private RendaFamiliar rendaFamiliar;
 
-    @OneToOne(mappedBy = "perfilSocial")
-    private Aluno aluno;
+    public PerfilSocial(Long id, Genero genero, NivelEscolaridade escolaridade, RendaFamiliar rendaFamiliar) {
+        this.id = id;
+        this.genero = genero;
+        this.escolaridade = escolaridade;
+        this.rendaFamiliar = rendaFamiliar;
+    }
+
+    public PerfilSocial() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+    }
+
+    public NivelEscolaridade getEscolaridade() {
+        return escolaridade;
+    }
+
+    public void setEscolaridade(NivelEscolaridade escolaridade) {
+        this.escolaridade = escolaridade;
+    }
+
+    public RendaFamiliar getRendaFamiliar() {
+        return rendaFamiliar;
+    }
+
+    public void setRendaFamiliar(RendaFamiliar rendaFamiliar) {
+        this.rendaFamiliar = rendaFamiliar;
+    }
 }
