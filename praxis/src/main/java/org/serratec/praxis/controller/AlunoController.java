@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.AlunoRepository;
@@ -43,7 +42,7 @@ public class AlunoController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Busca Aluno por ID", description = "A resposta é o aluno referente ao ID passado.")
+    @Operation(summary = "Busca Aluno por ID", description = "A resposta é o Aluno referente ao ID passado.")
     public ResponseEntity<Aluno> buscarPorId(@PathVariable Long id) {
         Aluno aluno = alunoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));

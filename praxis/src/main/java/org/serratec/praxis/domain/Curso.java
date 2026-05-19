@@ -46,7 +46,7 @@ public class Curso {
     @OneToMany(mappedBy = "curso")
     private List<Matricula> matriculas;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "curso_professor",
     joinColumns = @JoinColumn(name = "id_curso"),
     inverseJoinColumns = @JoinColumn(name = "id_professor"))
