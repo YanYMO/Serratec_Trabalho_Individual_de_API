@@ -2,15 +2,16 @@ package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.domain.Curso;
+import org.serratec.praxis.dto.*;
 import org.serratec.praxis.exception.ResourceNotFoundException;
-import org.serratec.praxis.repository.CursoRepository;
+import org.serratec.praxis.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,43 +20,48 @@ import java.util.Optional;
 public class CursoController {
 
     @Autowired
-    CursoRepository cursoRepository;
+    CursoService cursoService;
 
     @GetMapping
-    public ResponseEntity<List<Curso>> listar() {
-        List<Curso> cursos = cursoRepository.findAll();
+    @Operation(summary = "Lista todos os Cursos", description = "A resposta lista os Cursos cadastrados.")
+    public ResponseEntity<List<CursoResponseDTO>> listar() {
 
-        if (cursos.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(cursos);
+        return ResponseEntity.ok(cursoService.findAll());
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Busca Aluno por ID", description = "A resposta é o Curso referente ao ID passado.")
-    public ResponseEntity<Curso> buscarPorId(@PathVariable Long id) {
-        Curso curso = cursoRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
+    @Operation(summary = "Busca Curso por ID", description = "A resposta é o Curso referente ao ID passado.")
+    public ResponseEntity<CursoResponseDTO> buscarPorId(@PathVariable Long id) {
+        CursoResponseDTO cursoDTO = cursoService.findById(id);
 
-        return ResponseEntity.ok(curso);
+        return ResponseEntity.ok(cursoDTO);
     }
 
     @PostMapping
-    @Operation(summary = "Cadastra um novo Aluno", description = "A resposta é o Curso criado.")
-    public ResponseEntity<Curso> cadastrar(@Valid @RequestBody Curso curso) {
-        cursoRepository.save(curso);
-        return ResponseEntity.status(HttpStatus.CREATED).body(curso);
+    @Operation(summary = "Cadastra um novo Curso", description = "A resposta é uma cópia dos dados que foram cadastrados.")
+    public ResponseEntity<CursoResponseDTO> cadastrar(@Valid @RequestBody CursoRequestDTO curso) {
+
+        CursoResponseDTO cursoDTO = cursoService.cadastrar(curso);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(cursoDTO.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualiza um Curso por ID", description = "A resposta é uma confirmação 200 OK")
+    public ResponseEntity<CursoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody CursoRequestDTO cursoDTO) {
+        cursoService.atualizar(id, cursoDTO);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Curso> deletar(@PathVariable Long id) {
-        Optional curso = cursoRepository.findById(id);
+    @Operation(summary = "Deleta um Curso por ID", description = "A resposta é uma confirmação 204 NO CONTENT")
+    public ResponseEntity<Object> deleteById(@PathVariable Long id) {
+        cursoService.deletarPorId(id);
 
-        if (curso.isEmpty()) {
-            throw new ResourceNotFoundException("Não encontramos um Aluno com esse identificador.");
-        }
-        cursoRepository.deleteById(id);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

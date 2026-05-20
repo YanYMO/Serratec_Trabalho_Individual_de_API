@@ -42,6 +42,7 @@ public class ProfessorService {
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Professor com esse identificador."));
 
         ProfessorResponseDTO professorDTO = new ProfessorResponseDTO(professor);
+
         return professorDTO;
     }
 

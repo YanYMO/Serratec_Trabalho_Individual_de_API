@@ -43,6 +43,7 @@ public class AlunoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
 
         AlunoResponseDTO alunoDTO = new AlunoResponseDTO(aluno);
+
         return alunoDTO;
     }
 

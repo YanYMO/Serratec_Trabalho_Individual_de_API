@@ -50,7 +50,7 @@ public class ProfessorController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualiza um Professor", description = "A resposta é uma confirmação 200 OK")
+    @Operation(summary = "Atualiza um Professor por ID", description = "A resposta é uma confirmação 200 OK")
     public ResponseEntity<AlunoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody ProfessorRequestDTO professorDTO) {
         professorService.atualizar(id, professorDTO);
 
@@ -58,7 +58,7 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta um Professor", description = "A resposta é uma confirmação 200 OK")
+    @Operation(summary = "Deleta um Professor por ID", description = "A resposta é uma confirmação 204 NO CONTENT")
     public ResponseEntity<Object> deleteById(@PathVariable Long id) {
         professorService.deletarPorId(id);
 

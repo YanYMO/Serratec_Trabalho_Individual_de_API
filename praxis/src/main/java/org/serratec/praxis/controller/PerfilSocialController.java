@@ -38,5 +38,4 @@ public class PerfilSocialController {
 
         return ResponseEntity.ok(perfilSocialService.atualizarPerfil(IdAluno, perfilDTO));
     }
-
 }

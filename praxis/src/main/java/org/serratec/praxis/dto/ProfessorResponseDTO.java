@@ -20,7 +20,7 @@ public class ProfessorResponseDTO {
     private String nome;
     private String cpf;
     private String email;
-    private List<Curso> cursos;
+    private List<String> cursos;
 
     public ProfessorResponseDTO() {
         super();
@@ -31,7 +31,7 @@ public class ProfessorResponseDTO {
         this.nome = professor.getNome();
         this.cpf = professor.getCpf();
         this.email = professor.getEmail();
-        this.cursos = professor.getCursos();
+        this.cursos = professor.getCursos().stream().map(Curso::getNome).toList();
     }
 
     public Long getId() {
@@ -66,11 +66,11 @@ public class ProfessorResponseDTO {
         this.email = email;
     }
 
-    public List<Curso> getCursos() {
+    public List<String> getCursos() {
         return cursos;
     }
 
-    public void setCursos(List<Curso> cursos) {
+    public void setCursos(List<String> cursos) {
         this.cursos = cursos;
     }
 }
