@@ -17,7 +17,8 @@ public class AlunoUpdateDTO {
     private String email;
 
     @NotBlank(message = "O campo precisa ser preenchido")
-    @Size(min = 12, max = 30)
+    @Size(min = 12, max = 30, message = "A senha precisa ter entre 12 e 30 caracteres")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).{12,30}$", message = "A senha deve conter letras e números")
     @Column(name = "senha", nullable = false, length = 30)
     private String senha;
 

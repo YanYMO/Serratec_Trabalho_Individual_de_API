@@ -66,7 +66,7 @@ public class AlunoController {
     public ResponseEntity<Object> deleteById(@PathVariable Long id) {
         alunoService.deletarPorId(id);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }
