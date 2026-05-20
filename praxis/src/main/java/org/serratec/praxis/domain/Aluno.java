@@ -106,6 +106,13 @@ public class Aluno {
         this.email = email;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
     public PerfilSocial getPerfilSocial() {
         return perfilSocial;
@@ -122,4 +129,5 @@ public class Aluno {
     public void setMatriculas(List<Matricula> matriculas) {
         this.matriculas = matriculas;
     }
+
 }

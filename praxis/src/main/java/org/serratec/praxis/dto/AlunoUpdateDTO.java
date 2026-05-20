@@ -67,4 +67,5 @@ public class AlunoUpdateDTO {
     public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+
 }

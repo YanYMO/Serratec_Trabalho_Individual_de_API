@@ -96,4 +96,5 @@ public class AlunoResponseDTO {
     public void setRendaFamiliar(String rendaFamiliar) {
         this.rendaFamiliar = rendaFamiliar;
     }
+
 }

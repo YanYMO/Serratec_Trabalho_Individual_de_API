@@ -91,4 +91,5 @@ public class AlunoRequestDTO {
     public void setPerfilSocialRequestDTO(PerfilSocialRequestDTO perfilSocialRequestDTO) {
         this.perfilSocialRequestDTO = perfilSocialRequestDTO;
     }
+
 }
