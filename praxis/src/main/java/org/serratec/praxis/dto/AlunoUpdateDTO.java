@@ -18,12 +18,12 @@ public class AlunoUpdateDTO {
 
     @NotBlank(message = "O campo precisa ser preenchido")
     @Size(min = 12, max = 30)
-    @Column(name = "senha", nullable = false, length = (30))
+    @Column(name = "senha", nullable = false, length = 30)
     private String senha;
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Past
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dataNascimento;
 
     public AlunoUpdateDTO(String nome, String email, String senha, LocalDate dataNascimento) {

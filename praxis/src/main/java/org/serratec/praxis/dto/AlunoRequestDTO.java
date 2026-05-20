@@ -1,13 +1,35 @@
 package org.serratec.praxis.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.br.CPF;
+
 import java.time.LocalDate;
 
 public class AlunoRequestDTO {
+
+    @NotBlank(message = "O campo precisa ser preenchido")
+    @Size(max = 80)
     private String nome;
+
+    @NotBlank(message = "O campo precisa ser preenchido")
+    @CPF
     private String cpf;
+
+    @NotNull(message = "O campo precisa ser preenchido")
+    @Past
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dataNascimento;
+
+    @NotBlank(message = "O campo precisa ser preenchido")
+    @Size(max = 60)
+    @Email
     private String email;
+
+    @NotBlank(message = "O campo precisa ser preenchido")
+    @Size(min = 12, max = 30)
     private String senha;
+
     private PerfilSocialRequestDTO perfilSocialRequestDTO;
 
     public AlunoRequestDTO(String nome, String cpf, LocalDate dataNascimento, String email, String senha, PerfilSocialRequestDTO perfilSocialRequestDTO) {
