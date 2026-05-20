@@ -11,11 +11,11 @@ public enum RendaFamiliar {
     CLASSE_A(5, "Acima de 25.000");
 
     private Integer codigo;
-    private String rendaFamiliar;
+    private String renda;
 
     private RendaFamiliar(Integer codigo, String rendaFamiliar) {
         this.codigo = codigo;
-        this.rendaFamiliar = rendaFamiliar;
+        this.renda = rendaFamiliar;
     }
 
     @JsonCreator
@@ -37,11 +37,11 @@ public enum RendaFamiliar {
         this.codigo = codigo;
     }
 
-    public String getRendaFamiliar() {
-        return rendaFamiliar;
+    public String getRenda() {
+        return renda;
     }
 
-    public void setRendaFamiliar(String rendaFamiliar) {
-        this.rendaFamiliar = rendaFamiliar;
+    public void setRenda(String rendaFamiliar) {
+        this.renda = rendaFamiliar;
     }
 }

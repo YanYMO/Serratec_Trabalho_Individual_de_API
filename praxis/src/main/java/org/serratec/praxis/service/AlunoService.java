@@ -22,7 +22,6 @@ public class AlunoService {
     @Autowired
     private AlunoRepository alunoRepository;
 
-    @GetMapping
     public List<AlunoResponseDTO> findAll() {
         List<Aluno> alunos = alunoRepository.findAll();
 
@@ -38,7 +37,6 @@ public class AlunoService {
         return alunosDTO;
     }
 
-    @GetMapping("/{id}")
     public AlunoResponseDTO findById (Long id) {
         Aluno aluno = alunoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
@@ -48,7 +46,6 @@ public class AlunoService {
     }
 
     @Transactional
-    @PostMapping
     public Aluno cadastrar(@Valid Aluno aluno) {
 
         Aluno a = alunoRepository.findByEmail(aluno.getEmail());
@@ -65,7 +62,6 @@ public class AlunoService {
     }
 
     @Transactional
-    @PutMapping("/{id}")
     public Aluno atualizar(@Valid Long id, AlunoUpdateDTO alunoDTO) {
         Aluno aluno = alunoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
@@ -78,7 +74,6 @@ public class AlunoService {
     }
 
     @Transactional
-    @DeleteMapping("/{id}")
     public void deletarPorId(Long id) {
 
         if (!alunoRepository.existsById(id)) {

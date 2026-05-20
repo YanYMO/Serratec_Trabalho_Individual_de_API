@@ -21,6 +21,7 @@ public class CursoController {
     @Autowired
     CursoRepository cursoRepository;
 
+    @GetMapping
     public ResponseEntity<List<Curso>> listar() {
         List<Curso> cursos = cursoRepository.findAll();
 
@@ -40,12 +41,13 @@ public class CursoController {
     }
 
     @PostMapping
+    @Operation(summary = "Cadastra um novo Aluno", description = "A resposta é o Curso criado.")
     public ResponseEntity<Curso> cadastrar(@Valid @RequestBody Curso curso) {
         cursoRepository.save(curso);
         return ResponseEntity.status(HttpStatus.CREATED).body(curso);
     }
 
-    @DeleteMapping("/{îd}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Curso> deletar(@PathVariable Long id) {
         Optional curso = cursoRepository.findById(id);
 

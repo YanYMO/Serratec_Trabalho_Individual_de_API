@@ -44,7 +44,7 @@ public class AlunoController {
     }
 
     @PostMapping
-    @Operation(summary = "Cadastra um novo Aluno", description = "A resposta é uma cópia dos dados se forem cadastrados.")
+    @Operation(summary = "Cadastra um novo Aluno", description = "A resposta é uma cópia dos dados que foram cadastrados.")
     public ResponseEntity<Aluno> cadastrar(@Valid @RequestBody Aluno aluno) {
 
         aluno = alunoService.cadastrar(aluno);
@@ -56,6 +56,7 @@ public class AlunoController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Atualiza um Aluno", description = "A resposta é uma confirmação 200 OK")
     public ResponseEntity<Aluno> atualizar(@Valid @PathVariable Long id, @RequestBody AlunoUpdateDTO alunoDTO) {
         alunoService.atualizar(id, alunoDTO);
 
@@ -63,6 +64,7 @@ public class AlunoController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Deleta um Aluno", description = "A resposta é uma confirmação 200 OK")
     public ResponseEntity<Object> deleteById(@PathVariable Long id) {
         alunoService.deletarPorId(id);
 

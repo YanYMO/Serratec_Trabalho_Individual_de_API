@@ -20,6 +20,7 @@ public class MatriculaController {
     @Autowired
     MatriculaRepository matriculaRepository;
 
+    @GetMapping
     public ResponseEntity<List<Matricula>> listar() {
         List<Matricula> matriculas = matriculaRepository.findAll();
 
@@ -44,7 +45,7 @@ public class MatriculaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(matricula);
     }
 
-    @DeleteMapping("/{îd}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Matricula> deletar(@PathVariable Long id) {
         Optional matricula = matriculaRepository.findById(id);
 

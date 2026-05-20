@@ -1,5 +1,6 @@
 package org.serratec.praxis.dto;
 
+import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.enums.Genero;
 import org.serratec.praxis.enums.NivelEscolaridade;
 import org.serratec.praxis.enums.RendaFamiliar;
@@ -8,11 +9,13 @@ public class PerfilSocialRequestDTO {
     private Genero genero;
     private NivelEscolaridade nivelEscolaridade;
     private RendaFamiliar rendaFamiliar;
+    private Aluno aluno;
 
     public PerfilSocialRequestDTO(Genero genero, NivelEscolaridade nivelEscolaridade, RendaFamiliar rendaFamiliar) {
         this.genero = genero;
         this.nivelEscolaridade = nivelEscolaridade;
         this.rendaFamiliar = rendaFamiliar;
+        this.aluno = aluno;
     }
 
     public PerfilSocialRequestDTO() {

@@ -54,7 +54,7 @@ public class PerfilSocialController {
         return ps;
     }*/
 
-    @DeleteMapping("/{îd}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Professor> deletar(@PathVariable Long id) {
         Optional professor = perfilSocialRepository.findById(id);
 

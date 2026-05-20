@@ -22,6 +22,7 @@ public class ProfessorController {
     @Autowired
     ProfessorRepository professorRepository;
 
+    @GetMapping
     public ResponseEntity<List<Professor>> listar() {
         List<Professor> professores = professorRepository.findAll();
 
@@ -46,7 +47,7 @@ public class ProfessorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(professor);
     }
 
-    @DeleteMapping("/{îd}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Professor> deletar(@PathVariable Long id) {
         Optional professor = professorRepository.findById(id);
 

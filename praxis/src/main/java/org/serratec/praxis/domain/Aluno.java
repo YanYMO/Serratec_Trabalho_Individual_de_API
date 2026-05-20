@@ -1,6 +1,7 @@
 package org.serratec.praxis.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -37,6 +38,12 @@ public class Aluno {
     @Email
     @Column(name = "email", nullable = false, length = 60)
     private String email;
+
+    @NotBlank(message = "O campo precisa ser preenchido")
+    @Size(min = 12, max = 30)
+    @JsonIgnore
+    @Column(name = "senha", nullable = false, length = 30)
+    private String senha;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "perfil_social_id")

@@ -1,10 +1,8 @@
 package org.serratec.praxis.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
@@ -13,10 +11,15 @@ public class AlunoUpdateDTO {
     @Size(max = 80)
     private String nome;
 
-    @NotNull(message = "O campo precisa ser preenchido")
-    @Past
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @NotBlank(message = "O campo precisa ser preenchido")
+    @Size(max = 60)
+    @Email
     private String email;
+
+    @NotBlank(message = "O campo precisa ser preenchido")
+    @Size(min = 12, max = 30)
+    @Column(name = "senha", nullable = false, length = (30))
+    private String senha;
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Past

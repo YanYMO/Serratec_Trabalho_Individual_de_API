@@ -14,7 +14,6 @@ import org.serratec.praxis.enums.RendaFamiliar;
 public class PerfilSocial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
 
     @NotNull(message = "O campo precisa ser preenchido")
@@ -76,5 +75,13 @@ public class PerfilSocial {
 
     public void setRendaFamiliar(RendaFamiliar rendaFamiliar) {
         this.rendaFamiliar = rendaFamiliar;
+    }
+
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
     }
 }
