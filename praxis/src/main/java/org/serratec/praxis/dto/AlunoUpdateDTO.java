@@ -26,9 +26,10 @@ public class AlunoUpdateDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
-    public AlunoUpdateDTO(String nome, String email, LocalDate dataNascimento) {
+    public AlunoUpdateDTO(String nome, String email, String senha, LocalDate dataNascimento) {
         this.nome = nome;
         this.email = email;
+        this.senha = senha;
         this.dataNascimento = dataNascimento;
     }
 
@@ -49,6 +50,14 @@ public class AlunoUpdateDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public LocalDate getDataNascimento() {

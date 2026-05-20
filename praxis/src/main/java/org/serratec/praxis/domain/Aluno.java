@@ -41,7 +41,6 @@ public class Aluno {
 
     @NotBlank(message = "O campo precisa ser preenchido")
     @Size(min = 12, max = 30)
-    @JsonIgnore
     @Column(name = "senha", nullable = false, length = 30)
     private String senha;
 
@@ -53,12 +52,13 @@ public class Aluno {
     @OneToMany(mappedBy = "aluno")
     private List<Matricula> matriculas;
 
-    public Aluno(Long id, String nome, String cpf, LocalDate dataNascimento, String email, PerfilSocial perfilSocial, List<Matricula> matriculas) {
+    public Aluno(Long id, String nome, String cpf, LocalDate dataNascimento, String email, String senha, PerfilSocial perfilSocial, List<Matricula> matriculas) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.email = email;
+        this.senha = senha;
         this.perfilSocial = perfilSocial;
         this.matriculas = matriculas;
     }
@@ -104,6 +104,14 @@ public class Aluno {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public PerfilSocial getPerfilSocial() {

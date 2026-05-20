@@ -28,7 +28,6 @@ public class AlunoService {
         if (alunos.isEmpty()) {
             throw new ResourceNotFoundException("Não existem Alunos cadastrados.");
         }
-
         List<AlunoResponseDTO> alunosDTO = new ArrayList<AlunoResponseDTO>();
 
         for (Aluno aluno : alunos) {
@@ -57,7 +56,6 @@ public class AlunoService {
         if (b != null) {
             throw new CpfException("CPF já cadastrado");
         }
-
         return alunoRepository.save(aluno);
     }
 
@@ -68,6 +66,7 @@ public class AlunoService {
 
         aluno.setNome(alunoDTO.getNome());
         aluno.setEmail(alunoDTO.getEmail());
+        aluno.setSenha(alunoDTO.getSenha());
         aluno.setDataNascimento(alunoDTO.getDataNascimento());
 
         return alunoRepository.save(aluno);

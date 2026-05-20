@@ -52,7 +52,7 @@ public class AlunoController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                         .path("/{id}").buildAndExpand(aluno.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(aluno);
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
