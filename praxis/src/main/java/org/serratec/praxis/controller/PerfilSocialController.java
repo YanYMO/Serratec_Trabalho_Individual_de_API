@@ -4,8 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.serratec.praxis.domain.PerfilSocial;
 import org.serratec.praxis.domain.Professor;
+import org.serratec.praxis.dto.AlunoResponseDTO;
+import org.serratec.praxis.dto.PerfilSocialRequestDTO;
+import org.serratec.praxis.dto.PerfilSocialResponseDTO;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.PerfilSocialRepository;
+import org.serratec.praxis.service.PerfilSocialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,54 +19,23 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/perfil-social")
+@RequestMapping("/perfis-sociais")
 public class PerfilSocialController {
 
     @Autowired
-    PerfilSocialRepository perfilSocialRepository;
+    PerfilSocialService perfilSocialService;
 
     @GetMapping
-    public ResponseEntity<List<PerfilSocial>> listar() {
-        List<PerfilSocial> perfissociais = perfilSocialRepository.findAll();
+    @Operation(summary = "Lista todos os Perfis Sociais", description = "A resposta são os perfis sociais com uma mensão ao aluno pertencente.")
+    public ResponseEntity<List<PerfilSocialResponseDTO>> listar() {
 
-        if (perfissociais.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(perfissociais);
+        return ResponseEntity.ok(perfilSocialService.findAll());
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Busca Aluno por ID", description = "A resposta é o Curso referente ao ID passado.")
-    public ResponseEntity<PerfilSocial> buscarPorId(@PathVariable Long id) {
-        PerfilSocial perfilSocial = perfilSocialRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
+    @PutMapping("/aluno/{IdAluno}")
+    public ResponseEntity<AlunoResponseDTO> atualizarPerfil(@Valid @PathVariable Long IdAluno, @RequestBody PerfilSocialRequestDTO perfilDTO) {
 
-        return ResponseEntity.ok(perfilSocial);
+        return ResponseEntity.ok(perfilSocialService.atualizarPerfil(IdAluno, perfilDTO));
     }
 
-    @PostMapping
-    public ResponseEntity<PerfilSocial> cadastrar(@Valid @RequestBody PerfilSocial perfilSocial) {
-        perfilSocialRepository.save(perfilSocial);
-        return ResponseEntity.status(HttpStatus.CREATED).body(perfilSocial);
-    }
-
-    /*@PutMapping("/perfis-sociais")
-    public ResponseEntity<PerfilSocial> atualizar(@Valid @RequestBody PerfilSocial perfilSocial, @PathVariable Long id) {
-        PerfilSocial ps = perfilSocialRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
-
-        return ps;
-    }*/
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Professor> deletar(@PathVariable Long id) {
-        Optional professor = perfilSocialRepository.findById(id);
-
-        if (professor.isEmpty()) {
-            throw new ResourceNotFoundException("Não encontramos um Aluno com esse identificador.");
-        }
-        perfilSocialRepository.deleteById(id);
-
-        return ResponseEntity.ok().build();
-    }
 }

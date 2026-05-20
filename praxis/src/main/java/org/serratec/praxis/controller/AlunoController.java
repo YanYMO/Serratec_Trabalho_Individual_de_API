@@ -24,14 +24,12 @@ import java.util.Optional;
 public class AlunoController {
 
     @Autowired
-    private AlunoRepository alunoRepository;
-
-    @Autowired
     private AlunoService alunoService;
 
     @GetMapping
     @Operation(summary = "Lista todos os Alunos", description = "A resposta lista os alunos cadastrados.")
     public ResponseEntity<List<AlunoResponseDTO>> listar() {
+
         return ResponseEntity.ok(alunoService.findAll());
     }
 

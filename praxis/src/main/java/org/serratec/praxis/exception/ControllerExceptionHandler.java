@@ -1,6 +1,5 @@
 package org.serratec.praxis.exception;
 
-import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import tools.jackson.databind.exc.ValueInstantiationException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,6 +33,27 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(ex, erroResposta, headers, status, request);
     }
 
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+
+        String mensagem = "Requisição inválida. Verifique o formato dos dados enviados.";
+
+        if (ex.getCause() instanceof ValueInstantiationException vie) {
+            if (vie.getCause() instanceof EnumValidationException eve) {
+                mensagem = eve.getMessage();
+            }
+        }
+
+        ErroResposta erroResposta = new ErroResposta(
+                HttpStatus.BAD_REQUEST.value(),
+                mensagem,
+                LocalDateTime.now(),
+                new ArrayList<>()
+        );
+
+        return ResponseEntity.badRequest().body(erroResposta);
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErroResposta> handleResourceNotFound(ResourceNotFoundException ex) {
 
@@ -42,21 +63,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 LocalDateTime.now(),
                 new ArrayList<>()
         );
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroResposta);
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-
-        ErroResposta erroResposta = new ErroResposta(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now(),
-                new ArrayList<>()
-        );
-
-        return ResponseEntity.badRequest().body(erroResposta);
     }
 
     @ExceptionHandler(EmailException.class)
@@ -69,7 +76,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 LocalDateTime.now(),
                 new ArrayList<>()
         );
-
         return ResponseEntity.unprocessableEntity().body(erroResposta);
     }
 
@@ -82,7 +88,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 LocalDateTime.now(),
                 new ArrayList<>()
         );
-
         return ResponseEntity.unprocessableEntity().body(erroResposta);
     }
+
 }

@@ -10,7 +10,7 @@ import org.serratec.praxis.enums.RendaFamiliar;
 @JsonPropertyOrder({
         "id",
         "genero",
-        "nivelEscolaridade",
+        "escolaridade",
         "rendaFamiliar",
         "aluno"
 })
@@ -18,10 +18,10 @@ import org.serratec.praxis.enums.RendaFamiliar;
 public class PerfilSocialResponseDTO {
 
     private Long id;
-    private Genero genero;
-    private NivelEscolaridade nivelEscolaridade;
-    private RendaFamiliar rendaFamiliar;
-    private Aluno aluno;
+    private String genero;
+    private String escolaridade;
+    private String rendaFamiliar;
+    private String aluno;
 
     public PerfilSocialResponseDTO() {
         super();
@@ -29,10 +29,10 @@ public class PerfilSocialResponseDTO {
 
     public PerfilSocialResponseDTO(PerfilSocial perfilSocial) {
         this.id = perfilSocial.getId();
-        this.genero = perfilSocial.getGenero();
-        this.nivelEscolaridade = perfilSocial.getEscolaridade();
-        this.rendaFamiliar = perfilSocial.getRendaFamiliar();
-        this.aluno = perfilSocial.getAluno();
+        this.genero = perfilSocial.getGenero().toString();
+        this.escolaridade = perfilSocial.getEscolaridade().getNivel().toUpperCase();
+        this.rendaFamiliar = perfilSocial.getRendaFamiliar().getRenda().toUpperCase();
+        this.aluno = perfilSocial.getAluno().getNome().toUpperCase();
     }
 
     public Long getId() {
@@ -43,35 +43,35 @@ public class PerfilSocialResponseDTO {
         this.id = id;
     }
 
-    public Genero getGenero() {
+    public String getGenero() {
         return genero;
     }
 
-    public void setGenero(Genero genero) {
+    public void setGenero(String genero) {
         this.genero = genero;
     }
 
-    public NivelEscolaridade getNivelEscolaridade() {
-        return nivelEscolaridade;
+    public String getEscolaridade() {
+        return escolaridade;
     }
 
-    public void setNivelEscolaridade(NivelEscolaridade nivelEscolaridade) {
-        this.nivelEscolaridade = nivelEscolaridade;
+    public void setEscolaridade(String escolaridade) {
+        this.escolaridade = escolaridade;
     }
 
-    public RendaFamiliar getRendaFamiliar() {
+    public String getRendaFamiliar() {
         return rendaFamiliar;
     }
 
-    public void setRendaFamiliar(RendaFamiliar rendaFamiliar) {
+    public void setRendaFamiliar(String rendaFamiliar) {
         this.rendaFamiliar = rendaFamiliar;
     }
 
-    public Aluno getAluno() {
+    public String getAluno() {
         return aluno;
     }
 
-    public void setAluno(Aluno aluno) {
+    public void setAluno(String aluno) {
         this.aluno = aluno;
     }
 }
