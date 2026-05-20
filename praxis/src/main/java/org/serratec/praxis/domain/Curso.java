@@ -38,7 +38,7 @@ public class Curso {
     @Column(name = "duracao_em_horas", nullable = false)
     private Integer duracaoEmHoras;
 
-    @NotBlank(message = "O campo precisa ser preenchido")
+    @NotNull(message = "O campo precisa ser preenchido")
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
     private TipoCurso tipo;

@@ -3,6 +3,8 @@ package org.serratec.praxis.service;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.serratec.praxis.domain.Aluno;
+import org.serratec.praxis.domain.PerfilSocial;
+import org.serratec.praxis.dto.AlunoRequestDTO;
 import org.serratec.praxis.dto.AlunoResponseDTO;
 import org.serratec.praxis.dto.AlunoUpdateDTO;
 import org.serratec.praxis.exception.CpfException;
@@ -11,7 +13,6 @@ import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +46,10 @@ public class AlunoService {
     }
 
     @Transactional
-    public Aluno cadastrar(@Valid Aluno aluno) {
+    public AlunoResponseDTO cadastrar(@Valid AlunoRequestDTO alunoDTO) {
 
-        Aluno a = alunoRepository.findByEmail(aluno.getEmail());
-        Aluno b = alunoRepository.findByCpf(aluno.getCpf());
+        Aluno a = alunoRepository.findByEmail(alunoDTO.getEmail());
+        Aluno b = alunoRepository.findByCpf(alunoDTO.getCpf());
 
         if (a != null) {
             throw new EmailException("Email já cadastrado");
@@ -56,7 +57,23 @@ public class AlunoService {
         if (b != null) {
             throw new CpfException("CPF já cadastrado");
         }
-        return alunoRepository.save(aluno);
+
+        PerfilSocial perfil = new PerfilSocial();
+        perfil.setGenero(alunoDTO.getPerfilSocialRequestDTO().getGenero());
+        perfil.setEscolaridade(alunoDTO.getPerfilSocialRequestDTO().getNivelEscolaridade());
+        perfil.setRendaFamiliar(alunoDTO.getPerfilSocialRequestDTO().getRendaFamiliar());
+
+        Aluno aluno = new Aluno();
+        aluno.setNome(alunoDTO.getNome());
+        aluno.setCpf(alunoDTO.getCpf());
+        aluno.setEmail(alunoDTO.getEmail());
+        aluno.setSenha(alunoDTO.getSenha());
+        aluno.setDataNascimento(alunoDTO.getDataNascimento());
+        aluno.setPerfilSocial(perfil);
+
+        alunoRepository.save(aluno);
+
+        return new AlunoResponseDTO(aluno);
     }
 
     @Transactional

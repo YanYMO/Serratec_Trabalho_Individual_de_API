@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.serratec.praxis.domain.Aluno;
+import org.serratec.praxis.dto.AlunoRequestDTO;
 import org.serratec.praxis.dto.AlunoResponseDTO;
 import org.serratec.praxis.dto.AlunoUpdateDTO;
 import org.serratec.praxis.exception.ResourceNotFoundException;
@@ -43,19 +44,19 @@ public class AlunoController {
 
     @PostMapping
     @Operation(summary = "Cadastra um novo Aluno", description = "A resposta é uma cópia dos dados que foram cadastrados.")
-    public ResponseEntity<Aluno> cadastrar(@Valid @RequestBody Aluno aluno) {
+    public ResponseEntity<AlunoResponseDTO> cadastrar(@Valid @RequestBody AlunoRequestDTO aluno) {
 
-        aluno = alunoService.cadastrar(aluno);
+        AlunoResponseDTO alunoDTO = alunoService.cadastrar(aluno);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                        .path("/{id}").buildAndExpand(aluno.getId()).toUri();
+                        .path("/{id}").buildAndExpand(alunoDTO.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza um Aluno", description = "A resposta é uma confirmação 200 OK")
-    public ResponseEntity<Aluno> atualizar(@Valid @PathVariable Long id, @RequestBody AlunoUpdateDTO alunoDTO) {
+    public ResponseEntity<AlunoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody AlunoUpdateDTO alunoDTO) {
         alunoService.atualizar(id, alunoDTO);
 
         return ResponseEntity.ok().build();

@@ -22,14 +22,10 @@ public class PerfilSocialRequestDTO {
     @Enumerated(EnumType.ORDINAL)
     private RendaFamiliar rendaFamiliar;
 
-    @NotNull(message = "O ID do Aluno precisa ser informado")
-    private Long alunoId;
-
-    public PerfilSocialRequestDTO(Genero genero, NivelEscolaridade nivelEscolaridade, RendaFamiliar rendaFamiliar, Long alunoId) {
+    public PerfilSocialRequestDTO(Genero genero, NivelEscolaridade nivelEscolaridade, RendaFamiliar rendaFamiliar) {
         this.genero = genero;
         this.nivelEscolaridade = nivelEscolaridade;
         this.rendaFamiliar = rendaFamiliar;
-        this.alunoId = alunoId;
     }
 
     public Genero getGenero() {
@@ -56,11 +52,4 @@ public class PerfilSocialRequestDTO {
         this.rendaFamiliar = rendaFamiliar;
     }
 
-    public Long getAlunoId() {
-        return alunoId;
-    }
-
-    public void setAlunoId(Long alunoId) {
-        this.alunoId = alunoId;
-    }
 }
