@@ -26,13 +26,14 @@ public class PerfilSocialController {
     PerfilSocialService perfilSocialService;
 
     @GetMapping
-    @Operation(summary = "Lista todos os Perfis Sociais", description = "A resposta são os perfis sociais com uma mensão ao aluno pertencente.")
+    @Operation(summary = "Lista todos os Perfis Sociais", description = "A resposta são os Perfis Sociais com uma mensão ao Aluno pertencente.")
     public ResponseEntity<List<PerfilSocialResponseDTO>> listar() {
 
         return ResponseEntity.ok(perfilSocialService.findAll());
     }
 
     @PutMapping("/aluno/{IdAluno}")
+    @Operation(summary = "Atualiza o Perfil Social", description = "A resposta é o Aluno com os dados de perfil atualizados.")
     public ResponseEntity<AlunoResponseDTO> atualizarPerfil(@Valid @PathVariable Long IdAluno, @RequestBody PerfilSocialRequestDTO perfilDTO) {
 
         return ResponseEntity.ok(perfilSocialService.atualizarPerfil(IdAluno, perfilDTO));
