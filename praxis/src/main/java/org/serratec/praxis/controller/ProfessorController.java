@@ -2,60 +2,66 @@ package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.serratec.praxis.domain.Curso;
-import org.serratec.praxis.domain.Professor;
-import org.serratec.praxis.exception.ResourceNotFoundException;
-import org.serratec.praxis.repository.CursoRepository;
-import org.serratec.praxis.repository.ProfessorRepository;
+import org.serratec.praxis.dto.AlunoRequestDTO;
+import org.serratec.praxis.dto.AlunoResponseDTO;
+import org.serratec.praxis.dto.ProfessorRequestDTO;
+import org.serratec.praxis.dto.ProfessorResponseDTO;
+import org.serratec.praxis.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/professores")
 public class ProfessorController {
 
     @Autowired
-    ProfessorRepository professorRepository;
+    ProfessorService professorService;
 
     @GetMapping
-    public ResponseEntity<List<Professor>> listar() {
-        List<Professor> professores = professorRepository.findAll();
+    @Operation(summary = "Lista todos os Professores", description = "A resposta lista os Professores cadastrados.")
+    public ResponseEntity<List<ProfessorResponseDTO>> listar() {
 
-        if (professores.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(professores);
+        return ResponseEntity.ok(professorService.findAll());
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Busca Aluno por ID", description = "A resposta é o Curso referente ao ID passado.")
-    public ResponseEntity<Professor> buscarPorId(@PathVariable Long id) {
-        Professor professor = professorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
+    @Operation(summary = "Busca Professor por ID", description = "A resposta é o Professor referente ao ID passado.")
+    public ResponseEntity<ProfessorResponseDTO> buscarPorId(@PathVariable Long id) {
+        ProfessorResponseDTO professorDTO = professorService.findById(id);
 
-        return ResponseEntity.ok(professor);
+        return ResponseEntity.ok(professorDTO);
     }
 
     @PostMapping
-    public ResponseEntity<Professor> cadastrar(@Valid @RequestBody Professor professor) {
-        professorRepository.save(professor);
-        return ResponseEntity.status(HttpStatus.CREATED).body(professor);
+    @Operation(summary = "Cadastra um novo Professor", description = "A resposta é uma cópia dos dados que foram cadastrados.")
+    public ResponseEntity<ProfessorResponseDTO> cadastrar(@Valid @RequestBody ProfessorRequestDTO professor) {
+
+        ProfessorResponseDTO professorDTO = professorService.cadastrar(professor);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(professorDTO.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualiza um Professor", description = "A resposta é uma confirmação 200 OK")
+    public ResponseEntity<AlunoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody ProfessorRequestDTO professorDTO) {
+        professorService.atualizar(id, professorDTO);
+
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Professor> deletar(@PathVariable Long id) {
-        Optional professor = professorRepository.findById(id);
+    @Operation(summary = "Deleta um Professor", description = "A resposta é uma confirmação 200 OK")
+    public ResponseEntity<Object> deleteById(@PathVariable Long id) {
+        professorService.deletarPorId(id);
 
-        if (professor.isEmpty()) {
-            throw new ResourceNotFoundException("Não encontramos um Aluno com esse identificador.");
-        }
-        professorRepository.deleteById(id);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

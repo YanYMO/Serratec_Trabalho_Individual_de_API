@@ -29,6 +29,7 @@ public class AlunoService {
         if (alunos.isEmpty()) {
             throw new ResourceNotFoundException("Não existem Alunos cadastrados.");
         }
+
         List<AlunoResponseDTO> alunosDTO = new ArrayList<AlunoResponseDTO>();
 
         for (Aluno aluno : alunos) {
@@ -77,14 +78,33 @@ public class AlunoService {
     }
 
     @Transactional
-    public Aluno atualizar(@Valid Long id, AlunoUpdateDTO alunoDTO) {
+    public Aluno atualizar(@Valid Long id, AlunoRequestDTO alunoDTO) {
         Aluno aluno = alunoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
 
+        Aluno a = alunoRepository.findByEmail(alunoDTO.getEmail());
+        Aluno b = alunoRepository.findByCpf(alunoDTO.getCpf());
+
+        if (a != null) {
+            throw new EmailException("Email já cadastrado");
+        }
+        if (b != null) {
+            throw new CpfException("CPF já cadastrado");
+        }
+
+        PerfilSocial perfil = new PerfilSocial();
+        perfil.setGenero(alunoDTO.getPerfilSocialRequestDTO().getGenero());
+        perfil.setEscolaridade(alunoDTO.getPerfilSocialRequestDTO().getNivelEscolaridade());
+        perfil.setRendaFamiliar(alunoDTO.getPerfilSocialRequestDTO().getRendaFamiliar());
+
         aluno.setNome(alunoDTO.getNome());
+        aluno.setCpf(alunoDTO.getCpf());
         aluno.setEmail(alunoDTO.getEmail());
         aluno.setSenha(alunoDTO.getSenha());
         aluno.setDataNascimento(alunoDTO.getDataNascimento());
+        aluno.setPerfilSocial(perfil);
+
+        alunoRepository.save(aluno);
 
         return alunoRepository.save(aluno);
     }
@@ -97,5 +117,4 @@ public class AlunoService {
         }
         alunoRepository.deleteById(id);
     }
-
 }

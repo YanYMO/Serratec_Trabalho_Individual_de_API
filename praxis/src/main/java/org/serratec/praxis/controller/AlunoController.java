@@ -28,7 +28,7 @@ public class AlunoController {
     private AlunoService alunoService;
 
     @GetMapping
-    @Operation(summary = "Lista todos os Alunos", description = "A resposta lista os alunos cadastrados.")
+    @Operation(summary = "Lista todos os Alunos", description = "A resposta lista os Alunos cadastrados.")
     public ResponseEntity<List<AlunoResponseDTO>> listar() {
 
         return ResponseEntity.ok(alunoService.findAll());
@@ -56,7 +56,7 @@ public class AlunoController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza um Aluno", description = "A resposta é uma confirmação 200 OK")
-    public ResponseEntity<AlunoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody AlunoUpdateDTO alunoDTO) {
+    public ResponseEntity<AlunoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody AlunoRequestDTO alunoDTO) {
         alunoService.atualizar(id, alunoDTO);
 
         return ResponseEntity.ok().build();
