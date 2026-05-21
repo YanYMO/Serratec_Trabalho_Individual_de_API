@@ -1,6 +1,7 @@
 package org.serratec.praxis.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -46,9 +47,11 @@ public class Curso {
     @JoinTable(name = "curso_professor",
             joinColumns = @JoinColumn(name = "id_curso"),
             inverseJoinColumns = @JoinColumn(name = "id_professor"))
+    @JsonManagedReference
     private List<Professor> professores = new ArrayList<>();
 
     @OneToMany(mappedBy = "curso")
+    @JsonManagedReference
     private List<Matricula> matriculas = new ArrayList<>();
 
     public Curso(Long id, String nome, String descricao, LocalDate dataInicio, Integer duracaoEmHoras, TipoCurso tipo, List<Matricula> matriculas, List<Professor> professores) {

@@ -1,9 +1,11 @@
 package org.serratec.praxis.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.hibernate.annotations.CreationTimestamp;
 import org.serratec.praxis.enums.StatusMatricula;
 
@@ -18,6 +20,7 @@ public class Matricula {
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Max(99999)
+    @Positive
     @Column(name = "codigo", nullable = false, length = 99999, unique = true)
     private Integer codigo;
 
@@ -32,10 +35,12 @@ public class Matricula {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "aluno_id", nullable = false)
+    @JsonBackReference
     private Aluno aluno;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "curso_id", nullable = false)
+    @JsonBackReference
     private Curso curso;
 
     public Matricula(Long id, Integer codigo, LocalDate dataMatricula, StatusMatricula status, Aluno aluno, Curso curso) {

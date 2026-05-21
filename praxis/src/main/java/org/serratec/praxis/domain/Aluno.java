@@ -1,5 +1,6 @@
 package org.serratec.praxis.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -51,6 +52,7 @@ public class Aluno {
     private PerfilSocial perfilSocial;
 
     @OneToMany(mappedBy = "aluno")
+    @JsonManagedReference
     private List<Matricula> matriculas;
 
     public Aluno(Long id, String nome, String cpf, LocalDate dataNascimento, String email, String senha, PerfilSocial perfilSocial, List<Matricula> matriculas) {

@@ -1,5 +1,6 @@
 package org.serratec.praxis.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -44,6 +45,7 @@ public class Professor {
     private String senha;
 
     @ManyToMany(mappedBy = "professores")
+    @JsonBackReference
     private List<Curso> cursos;
 
     public Professor(Long id, String nome, String cpf, LocalDate dataNascimento, String email, String senha, List<Curso> cursos) {

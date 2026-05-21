@@ -3,12 +3,14 @@ package org.serratec.praxis.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import org.serratec.praxis.enums.StatusMatricula;
 
 public class MatriculaRequestDTO {
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Max(99999)
+    @Positive
     @Schema(description = "Codigo da Matrícula", example = "12345")
     private Integer codigo;
 
