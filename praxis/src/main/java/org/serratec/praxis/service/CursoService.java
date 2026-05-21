@@ -8,8 +8,6 @@ import org.serratec.praxis.dto.CursoRequestDTO;
 import org.serratec.praxis.dto.CursoResponseDTO;
 import org.serratec.praxis.dto.ProfessorRequestDTO;
 import org.serratec.praxis.dto.ProfessorResponseDTO;
-import org.serratec.praxis.exception.CpfException;
-import org.serratec.praxis.exception.EmailException;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

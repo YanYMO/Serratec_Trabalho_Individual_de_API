@@ -6,8 +6,7 @@ import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.domain.PerfilSocial;
 import org.serratec.praxis.domain.Professor;
 import org.serratec.praxis.dto.*;
-import org.serratec.praxis.exception.CpfException;
-import org.serratec.praxis.exception.EmailException;
+import org.serratec.praxis.exception.DuplicateEntryException;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,10 +52,10 @@ public class ProfessorService {
         Professor b = professorRepository.findByCpf(professorDTO.getCpf());
 
         if (a != null) {
-            throw new EmailException("Email já cadastrado");
+            throw new DuplicateEntryException("Email já cadastrado");
         }
         if (b != null) {
-            throw new CpfException("CPF já cadastrado");
+            throw new DuplicateEntryException("CPF já cadastrado");
         }
 
         Professor professor = new Professor();
@@ -80,10 +79,10 @@ public class ProfessorService {
         Professor b = professorRepository.findByCpf(professorDTO.getCpf());
 
         if (a != null) {
-            throw new EmailException("Email já cadastrado");
+            throw new DuplicateEntryException("Email já cadastrado");
         }
         if (b != null) {
-            throw new CpfException("CPF já cadastrado");
+            throw new DuplicateEntryException("CPF já cadastrado");
         }
 
         professor.setNome(professorDTO.getNome());

@@ -66,29 +66,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroResposta);
     }
 
-    @ExceptionHandler(EmailException.class)
-    protected ResponseEntity<ErroResposta> handleEmailException(EmailException ex) {
-
+    @ExceptionHandler(DuplicateEntryException.class)
+    protected ResponseEntity<ErroResposta> handleDuplicateEntryEception(DuplicateEntryException ex) {
 
         ErroResposta erroResposta = new ErroResposta(
-                HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                HttpStatus.CONFLICT.value(),
                 ex.getMessage(),
                 LocalDateTime.now(),
                 new ArrayList<>()
         );
-        return ResponseEntity.unprocessableEntity().body(erroResposta);
-    }
-
-    @ExceptionHandler(CpfException.class)
-    protected ResponseEntity<ErroResposta> handleCpfException(CpfException ex) {
-
-        ErroResposta erroResposta = new ErroResposta(
-                HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                ex.getMessage(),
-                LocalDateTime.now(),
-                new ArrayList<>()
-        );
-        return ResponseEntity.unprocessableEntity().body(erroResposta);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(erroResposta);
     }
 
 }

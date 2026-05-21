@@ -36,9 +36,12 @@ public class AlunoResponseDTO {
         this.nome = aluno.getNome();
         this.cpf= aluno.getCpf();
         this.email = aluno.getEmail();
-        this.genero = aluno.getPerfilSocial().getGenero().toString();
-        this.escolaridade = aluno.getPerfilSocial().getEscolaridade().getNivel().toUpperCase();
-        this.rendaFamiliar = aluno.getPerfilSocial().getRendaFamiliar().getRenda().toUpperCase();
+
+        if (aluno.getPerfilSocial() != null) {
+            this.genero = aluno.getPerfilSocial().getGenero().toString();
+            this.escolaridade = aluno.getPerfilSocial().getEscolaridade().getNivel().toUpperCase();
+            this.rendaFamiliar = aluno.getPerfilSocial().getRendaFamiliar().getRenda().toUpperCase();
+        }
     }
 
     public Long getId() {

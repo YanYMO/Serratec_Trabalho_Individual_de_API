@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.serratec.praxis.domain.Curso;
 import org.serratec.praxis.domain.Professor;
 
+import java.util.Collections;
 import java.util.List;
 
 @JsonPropertyOrder({
@@ -31,7 +32,8 @@ public class ProfessorResponseDTO {
         this.nome = professor.getNome();
         this.cpf = professor.getCpf();
         this.email = professor.getEmail();
-        this.cursos = professor.getCursos().stream().map(Curso::getNome).toList();
+        this.cursos = professor.getCursos() == null ? Collections.emptyList() : 
+                professor.getCursos().stream().map(Curso::getNome).toList();
     }
 
     public Long getId() {

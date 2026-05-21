@@ -7,8 +7,7 @@ import org.serratec.praxis.domain.PerfilSocial;
 import org.serratec.praxis.dto.AlunoRequestDTO;
 import org.serratec.praxis.dto.AlunoResponseDTO;
 import org.serratec.praxis.dto.AlunoUpdateDTO;
-import org.serratec.praxis.exception.CpfException;
-import org.serratec.praxis.exception.EmailException;
+import org.serratec.praxis.exception.DuplicateEntryException;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,10 +53,10 @@ public class AlunoService {
         Aluno b = alunoRepository.findByCpf(alunoDTO.getCpf());
 
         if (a != null) {
-            throw new EmailException("Email já cadastrado");
+            throw new DuplicateEntryException("Email já cadastrado");
         }
         if (b != null) {
-            throw new CpfException("CPF já cadastrado");
+            throw new DuplicateEntryException("CPF já cadastrado");
         }
 
         PerfilSocial perfil = new PerfilSocial();
@@ -87,10 +86,10 @@ public class AlunoService {
         Aluno b = alunoRepository.findByCpf(alunoDTO.getCpf());
 
         if (a != null) {
-            throw new EmailException("Email já cadastrado");
+            throw new DuplicateEntryException("Email já cadastrado");
         }
         if (b != null) {
-            throw new CpfException("CPF já cadastrado");
+            throw new DuplicateEntryException("CPF já cadastrado");
         }
 
         PerfilSocial perfil = new PerfilSocial();
@@ -104,8 +103,6 @@ public class AlunoService {
         aluno.setSenha(alunoDTO.getSenha());
         aluno.setDataNascimento(alunoDTO.getDataNascimento());
         aluno.setPerfilSocial(perfil);
-
-        alunoRepository.save(aluno);
 
         return alunoRepository.save(aluno);
     }

@@ -39,6 +39,9 @@ public class ProfessorRequestDTO {
         this.senha = senha;
     }
 
+    public ProfessorRequestDTO() {
+    }
+
     public String getNome() {
         return nome;
     }
