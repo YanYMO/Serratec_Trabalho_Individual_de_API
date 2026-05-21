@@ -2,8 +2,8 @@ package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.serratec.praxis.dto.AlunoRequestDTO;
-import org.serratec.praxis.dto.AlunoResponseDTO;
+import org.serratec.praxis.dto.request.AlunoRequestDTO;
+import org.serratec.praxis.dto.response.AlunoResponseDTO;
 import org.serratec.praxis.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

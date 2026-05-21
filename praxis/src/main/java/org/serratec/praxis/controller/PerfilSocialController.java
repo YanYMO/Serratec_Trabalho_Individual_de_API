@@ -2,9 +2,9 @@ package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.serratec.praxis.dto.AlunoResponseDTO;
-import org.serratec.praxis.dto.PerfilSocialRequestDTO;
-import org.serratec.praxis.dto.PerfilSocialResponseDTO;
+import org.serratec.praxis.dto.response.AlunoResponseDTO;
+import org.serratec.praxis.dto.request.PerfilSocialRequestDTO;
+import org.serratec.praxis.dto.response.PerfilSocialResponseDTO;
 import org.serratec.praxis.service.PerfilSocialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

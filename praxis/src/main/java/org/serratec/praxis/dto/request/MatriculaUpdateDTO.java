@@ -1,4 +1,4 @@
-package org.serratec.praxis.dto;
+package org.serratec.praxis.dto.request;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

@@ -1,4 +1,4 @@
-package org.serratec.praxis.dto;
+package org.serratec.praxis.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.*;
@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
-public class AlunoRequestDTO {
+public class ProfessorRequestDTO {
 
     @NotBlank(message = "O campo precisa ser preenchido")
     @Size(max = 80)
@@ -31,18 +31,15 @@ public class AlunoRequestDTO {
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).{12,30}$", message = "A senha deve conter letras e números")
     private String senha;
 
-    private PerfilSocialRequestDTO perfilSocialRequestDTO;
-
-    public AlunoRequestDTO(String nome, String cpf, LocalDate dataNascimento, String email, String senha, PerfilSocialRequestDTO perfilSocialRequestDTO) {
+    public ProfessorRequestDTO(String nome, String cpf, LocalDate dataNascimento, String email, String senha) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.email = email;
         this.senha = senha;
-        this.perfilSocialRequestDTO = perfilSocialRequestDTO;
     }
 
-    public AlunoRequestDTO() {
+    public ProfessorRequestDTO() {
     }
 
     public String getNome() {
@@ -84,13 +81,4 @@ public class AlunoRequestDTO {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public PerfilSocialRequestDTO getPerfilSocialRequestDTO() {
-        return perfilSocialRequestDTO;
-    }
-
-    public void setPerfilSocialRequestDTO(PerfilSocialRequestDTO perfilSocialRequestDTO) {
-        this.perfilSocialRequestDTO = perfilSocialRequestDTO;
-    }
-
 }

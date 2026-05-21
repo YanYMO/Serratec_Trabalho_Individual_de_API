@@ -1,4 +1,4 @@
-package org.serratec.praxis.dto;
+package org.serratec.praxis.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.EnumType;

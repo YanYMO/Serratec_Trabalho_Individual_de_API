@@ -2,7 +2,8 @@ package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.serratec.praxis.dto.*;
+import org.serratec.praxis.dto.request.CursoRequestDTO;
+import org.serratec.praxis.dto.response.CursoResponseDTO;
 import org.serratec.praxis.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package org.serratec.praxis.dto;
+package org.serratec.praxis.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.serratec.praxis.domain.Curso;

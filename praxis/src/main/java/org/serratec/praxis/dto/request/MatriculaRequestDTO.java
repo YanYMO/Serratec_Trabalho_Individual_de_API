@@ -1,15 +1,9 @@
-package org.serratec.praxis.dto;
+package org.serratec.praxis.dto.request;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.CreationTimestamp;
-import org.serratec.praxis.domain.Aluno;
-import org.serratec.praxis.domain.Curso;
 import org.serratec.praxis.enums.StatusMatricula;
-
-import java.time.LocalDate;
 
 public class MatriculaRequestDTO {
 
