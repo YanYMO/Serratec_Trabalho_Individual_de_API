@@ -27,7 +27,7 @@ public class Professor {
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Past
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
 

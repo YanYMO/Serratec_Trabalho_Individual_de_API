@@ -1,8 +1,7 @@
 package org.serratec.praxis.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -14,21 +13,25 @@ public class CursoRequestDTO {
 
     @NotBlank(message = "O campo precisa ser preenchido")
     @Size(max = 30)
+    @Schema(description = "Nome completo do Curso", example = "API")
     private String nome;
 
     @NotBlank(message = "O campo precisa ser preenchido")
     @Size(max = 200)
+    @Schema(description = "Descrição completa do Curso", example = "Curso de Api")
     private String descricao;
 
     @NotNull(message = "O campo precisa ser preenchido")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @Schema(description = "Data de início do Curso", example = "20/05/2026")
     private LocalDate dataInicio;
 
     @NotNull(message = "O campo precisa ser preenchido")
+    @Schema(description = "Duração em horas do Curso", example = "150")
     private Integer duracaoEmHoras;
 
     @NotNull(message = "O campo precisa ser preenchido")
-    @Enumerated(EnumType.STRING)
+    @Schema(description = "Tipo do Curso", example = "EAD, PRESENCIAL, SEMI_PRESENCIAL")
     private TipoCurso tipo;
 
     public CursoRequestDTO(String nome, String descricao, LocalDate dataInicio, Integer duracaoEmHoras, TipoCurso tipo) {

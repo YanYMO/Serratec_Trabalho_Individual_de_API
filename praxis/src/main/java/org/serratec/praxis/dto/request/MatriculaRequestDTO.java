@@ -1,6 +1,6 @@
 package org.serratec.praxis.dto.request;
 
-import jakarta.persistence.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import org.serratec.praxis.enums.StatusMatricula;
@@ -9,16 +9,19 @@ public class MatriculaRequestDTO {
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Max(99999)
+    @Schema(description = "Codigo da Matrícula", example = "12345")
     private Integer codigo;
 
     @NotNull(message = "O campo precisa ser preenchido")
-    @Enumerated(EnumType.STRING)
+    @Schema(description = "Status da Matrícula", example = "ATIVA, SUSPENSA, CANCELADA")
     private StatusMatricula status;
 
     @NotNull(message = "O campo precisa ser preenchido")
+    @Schema(description = "O identidicador do Aluno já cadastrado", example = "1")
     private Long alunoId;
 
     @NotNull(message = "O campo precisa ser preenchido")
+    @Schema(description = "O identificador do Curso já cadastrado", example = "1")
     private Long cursoId;
 
     public MatriculaRequestDTO(Integer codigo, StatusMatricula status, Long alunoId, Long cursoId) {

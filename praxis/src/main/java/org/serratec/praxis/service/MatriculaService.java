@@ -74,7 +74,7 @@ public class MatriculaService {
     @Transactional
     public MatriculaResponseDTO atualizar(@Valid Long id, MatriculaUpdateDTO UpdateDTO) {
         Matricula matricula = matriculaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
+                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos uma Matricula com esse identificador."));
 
         matricula.setStatus(UpdateDTO.getStatus());
         matriculaRepository.save(matricula);

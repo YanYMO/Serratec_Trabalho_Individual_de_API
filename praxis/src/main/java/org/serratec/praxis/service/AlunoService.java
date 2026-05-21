@@ -115,9 +115,11 @@ public class AlunoService {
 
     @Transactional
     public void deletarPorId(Long id) {
+        Aluno aluno = alunoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
 
-        if (!alunoRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Não encontramos um Aluno com esse identificador.");
+        if (!aluno.getMatriculas().isEmpty()) {
+            throw new DuplicateEntryException("Não é possível deletar um Aluno com matrículas ativas.");
         }
         alunoRepository.deleteById(id);
     }

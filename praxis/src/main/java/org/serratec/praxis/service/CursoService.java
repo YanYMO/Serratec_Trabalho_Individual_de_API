@@ -6,6 +6,7 @@ import org.serratec.praxis.domain.Curso;
 import org.serratec.praxis.domain.Professor;
 import org.serratec.praxis.dto.request.CursoRequestDTO;
 import org.serratec.praxis.dto.response.CursoResponseDTO;
+import org.serratec.praxis.exception.DuplicateEntryException;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.CursoRepository;
 import org.serratec.praxis.repository.ProfessorRepository;
@@ -69,7 +70,7 @@ public class CursoService {
         Curso curso = cursoRepository.findById(idCurso)
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
         Professor professor = professorRepository.findById(idProfessor)
-                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
+                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Professor com esse identificador."));
 
         curso.getProfessores().add(professor);
         cursoRepository.save(curso);
@@ -95,9 +96,11 @@ public class CursoService {
 
     @Transactional
     public void deletarPorId(Long id) {
+        Curso curso = cursoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
 
-        if (!cursoRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Não encontramos um Curso com esse identificador.");
+        if (!curso.getMatriculas().isEmpty()) {
+            throw new DuplicateEntryException("Não é possível deletar um Curso com matrículas ativas.");
         }
         cursoRepository.deleteById(id);
     }

@@ -3,12 +3,14 @@ package org.serratec.praxis.service;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.serratec.praxis.domain.Aluno;
+import org.serratec.praxis.domain.Curso;
 import org.serratec.praxis.domain.Professor;
 import org.serratec.praxis.dto.request.ProfessorRequestDTO;
 import org.serratec.praxis.dto.response.ProfessorResponseDTO;
 import org.serratec.praxis.exception.DuplicateEntryException;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.AlunoRepository;
+import org.serratec.praxis.repository.CursoRepository;
 import org.serratec.praxis.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class ProfessorService {
     ProfessorRepository professorRepository;
     @Autowired
     AlunoRepository alunoRepository;
+    @Autowired
+    CursoRepository cursoRepository;
 
     public List<ProfessorResponseDTO> findAll() {
         List<Professor> professores = professorRepository.findAll();
@@ -105,9 +109,12 @@ public class ProfessorService {
 
     @Transactional
     public void deletarPorId(Long id) {
+        Professor professor = professorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Professor com esse identificador."));
 
-        if (!professorRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Não encontramos um Aluno com esse identificador.");
+        for (Curso curso : professor.getCursos()) {
+            curso.getProfessores().remove(professor);
+            cursoRepository.save(curso);
         }
         professorRepository.deleteById(id);
     }

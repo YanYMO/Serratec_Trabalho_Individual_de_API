@@ -1,14 +1,13 @@
 package org.serratec.praxis.dto.request;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import org.serratec.praxis.enums.StatusMatricula;
 
 public class MatriculaUpdateDTO {
 
     @NotNull(message = "O campo precisa ser preenchido")
-    @Enumerated(EnumType.STRING)
+    @Schema(description = "Status que será aplicado na Matrícula escolhida", example = "ATIVA, SUSPENSA, CANCELADA")
     private StatusMatricula status;
 
     public MatriculaUpdateDTO(StatusMatricula status) {
