@@ -1,6 +1,8 @@
 package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.serratec.praxis.dto.request.MatriculaRequestDTO;
 import org.serratec.praxis.dto.request.MatriculaUpdateDTO;
@@ -23,6 +25,10 @@ public class MatriculaController {
 
     @GetMapping
     @Operation(summary = "Lista todas as Matriculas", description = "A resposta lista as Matriculas cadastradas.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Nenhum registro encontrado")
+    })
     public ResponseEntity<List<MatriculaResponseDTO>> listar() {
 
         return ResponseEntity.ok(matriculaService.findAll());
@@ -30,6 +36,10 @@ public class MatriculaController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca Matricula por ID", description = "A resposta é a Matricula referente ao ID passado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Registro encontrado"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado")
+    })
     public ResponseEntity<MatriculaResponseDTO> buscarPorId(@PathVariable Long id) {
         MatriculaResponseDTO matriculaDTO = matriculaService.findById(id);
 
@@ -38,6 +48,11 @@ public class MatriculaController {
 
     @PostMapping
     @Operation(summary = "Cadastra uma nova Matricula", description = "A resposta é uma confirmação 200 OK e o corpo do objeto atualizado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Cadastrado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+            @ApiResponse(responseCode = "409", description = "Registro já existe")
+    })
     public ResponseEntity<MatriculaResponseDTO> cadastrarMatricula(@Valid @RequestBody MatriculaRequestDTO matricula) {
 
         MatriculaResponseDTO matriculaDTO = matriculaService.cadastrarMatricula(matricula);
@@ -45,11 +60,16 @@ public class MatriculaController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(matriculaDTO.getId()).toUri();
 
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(matriculaDTO);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza a Matricula por ID", description = "A resposta é uma confirmação 200 OK e o corpo do objeto atualizado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado")
+    })
     public ResponseEntity<MatriculaResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody MatriculaUpdateDTO UpdateDTO) {
 
         return ResponseEntity.ok().body(matriculaService.atualizar(id, UpdateDTO));
@@ -57,6 +77,10 @@ public class MatriculaController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta uma Matricula por ID", description = "A resposta é uma confirmação 204 NO CONTENT")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado")
+    })
     public ResponseEntity<Object> deletarPorId(@PathVariable Long id) {
         matriculaService.deletarPorId(id);
 

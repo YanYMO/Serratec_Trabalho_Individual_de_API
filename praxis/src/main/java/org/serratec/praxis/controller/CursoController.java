@@ -1,6 +1,8 @@
 package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.serratec.praxis.dto.request.CursoRequestDTO;
 import org.serratec.praxis.dto.response.CursoResponseDTO;
@@ -22,6 +24,10 @@ public class CursoController {
 
     @GetMapping
     @Operation(summary = "Lista todos os Cursos", description = "A resposta lista os Cursos cadastrados.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Nenhum registro encontrado")
+    })
     public ResponseEntity<List<CursoResponseDTO>> listar() {
 
         return ResponseEntity.ok(cursoService.findAll());
@@ -29,6 +35,10 @@ public class CursoController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca Curso por ID", description = "A resposta é o Curso referente ao ID passado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Registro encontrado"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado")
+    })
     public ResponseEntity<CursoResponseDTO> buscarPorId(@PathVariable Long id) {
         CursoResponseDTO cursoDTO = cursoService.findById(id);
 
@@ -37,6 +47,11 @@ public class CursoController {
 
     @PostMapping
     @Operation(summary = "Cadastra um novo Curso", description = "A resposta é uma cópia dos dados que foram cadastrados.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Cadastrado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+            @ApiResponse(responseCode = "409", description = "Registro já existe")
+    })
     public ResponseEntity<CursoResponseDTO> cadastrarCurso(@Valid @RequestBody CursoRequestDTO curso) {
 
         CursoResponseDTO cursoDTO = cursoService.cadastrarCurso(curso);
@@ -44,7 +59,7 @@ public class CursoController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(cursoDTO.getId()).toUri();
 
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(cursoDTO);
     }
 
     @PostMapping("/curso/{cursoId}/professor/{professorId}")
@@ -61,14 +76,22 @@ public class CursoController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza um Curso por ID", description = "A resposta é uma confirmação 200 OK e o corpo do objeto atualizado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado")
+    })
     public ResponseEntity<CursoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody CursoRequestDTO cursoDTO) {
-        cursoService.atualizar(id, cursoDTO);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(cursoService.atualizar(id, cursoDTO));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta um Curso por ID", description = "A resposta é uma confirmação 204 NO CONTENT")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado")
+    })
     public ResponseEntity<Object> deletarPorId(@PathVariable Long id) {
         cursoService.deletarPorId(id);
 

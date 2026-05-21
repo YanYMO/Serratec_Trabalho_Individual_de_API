@@ -2,11 +2,13 @@ package org.serratec.praxis.service;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.domain.Professor;
 import org.serratec.praxis.dto.request.ProfessorRequestDTO;
 import org.serratec.praxis.dto.response.ProfessorResponseDTO;
 import org.serratec.praxis.exception.DuplicateEntryException;
 import org.serratec.praxis.exception.ResourceNotFoundException;
+import org.serratec.praxis.repository.AlunoRepository;
 import org.serratec.praxis.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class ProfessorService {
 
     @Autowired
     ProfessorRepository professorRepository;
+    @Autowired
+    AlunoRepository alunoRepository;
 
     public List<ProfessorResponseDTO> findAll() {
         List<Professor> professores = professorRepository.findAll();
@@ -47,13 +51,15 @@ public class ProfessorService {
     @Transactional
     public ProfessorResponseDTO cadastrar(@Valid ProfessorRequestDTO professorDTO) {
 
-        Professor a = professorRepository.findByEmail(professorDTO.getEmail());
-        Professor b = professorRepository.findByCpf(professorDTO.getCpf());
+        Professor pEmail = professorRepository.findByEmail(professorDTO.getEmail());
+        Professor pCpf = professorRepository.findByCpf(professorDTO.getCpf());
+        Aluno aEmail = alunoRepository.findByEmail(professorDTO.getEmail());
+        Aluno aCpf = alunoRepository.findByCpf(professorDTO.getCpf());
 
-        if (a != null) {
+        if (aEmail != null || pEmail != null) {
             throw new DuplicateEntryException("Email já cadastrado");
         }
-        if (b != null) {
+        if (aCpf != null || pCpf != null) {
             throw new DuplicateEntryException("CPF já cadastrado");
         }
 
@@ -74,13 +80,15 @@ public class ProfessorService {
         Professor professor = professorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Professor com esse identificador."));
 
-        Professor a = professorRepository.findByEmail(professorDTO.getEmail());
-        Professor b = professorRepository.findByCpf(professorDTO.getCpf());
+        Professor pEmail = professorRepository.findByEmail(professorDTO.getEmail());
+        Professor pCpf = professorRepository.findByCpf(professorDTO.getCpf());
+        Aluno aEmail = alunoRepository.findByEmail(professorDTO.getEmail());
+        Aluno aCpf = alunoRepository.findByCpf(professorDTO.getCpf());
 
-        if (a != null) {
+        if (pEmail != null && !pEmail.getId().equals(id) || aEmail != null && !aEmail.getId().equals(id)) {
             throw new DuplicateEntryException("Email já cadastrado");
         }
-        if (b != null) {
+        if (pCpf != null && !pCpf.getId().equals(id) || aCpf != null && !aCpf.getId().equals(id)) {
             throw new DuplicateEntryException("CPF já cadastrado");
         }
 

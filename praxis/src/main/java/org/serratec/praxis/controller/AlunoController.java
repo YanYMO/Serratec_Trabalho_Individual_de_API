@@ -1,6 +1,8 @@
 package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.serratec.praxis.dto.request.AlunoRequestDTO;
 import org.serratec.praxis.dto.response.AlunoResponseDTO;
@@ -22,6 +24,10 @@ public class AlunoController {
 
     @GetMapping
     @Operation(summary = "Lista todos os Alunos", description = "A resposta lista os Alunos cadastrados.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lista retornada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Nenhum registro encontrado")
+    })
     public ResponseEntity<List<AlunoResponseDTO>> listar() {
 
         return ResponseEntity.ok(alunoService.findAll());
@@ -29,6 +35,10 @@ public class AlunoController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Busca Aluno por ID", description = "A resposta é o Aluno referente ao ID passado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Registro encontrado"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado")
+    })
     public ResponseEntity<AlunoResponseDTO> buscarPorId(@PathVariable Long id) {
         AlunoResponseDTO alunoDTO = alunoService.findById(id);
 
@@ -37,6 +47,11 @@ public class AlunoController {
 
     @PostMapping
     @Operation(summary = "Cadastra um novo Aluno", description = "A resposta é uma cópia dos dados que foram cadastrados.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Cadastrado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+            @ApiResponse(responseCode = "409", description = "Registro já existe")
+    })
     public ResponseEntity<AlunoResponseDTO> cadastrar(@Valid @RequestBody AlunoRequestDTO aluno) {
 
         AlunoResponseDTO alunoDTO = alunoService.cadastrar(aluno);
@@ -44,11 +59,16 @@ public class AlunoController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                         .path("/{id}").buildAndExpand(alunoDTO.getId()).toUri();
 
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(alunoDTO);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza um Aluno por ID", description = "A resposta é uma confirmação 200 OK e o corpo do objeto atualizado.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado")
+    })
     public ResponseEntity<AlunoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody AlunoRequestDTO alunoDTO) {
 
         return ResponseEntity.ok().body(alunoService.atualizar(id, alunoDTO));
@@ -56,6 +76,10 @@ public class AlunoController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta um Aluno por ID", description = "A resposta é uma confirmação 204 NO CONTENT")
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado")
+    })
     public ResponseEntity<Object> deleteById(@PathVariable Long id) {
         alunoService.deletarPorId(id);
 
