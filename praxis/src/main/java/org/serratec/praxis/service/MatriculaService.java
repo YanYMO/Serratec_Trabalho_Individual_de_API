@@ -89,6 +89,6 @@ public class MatriculaService {
         if (!matriculaRepository.existsById(id)) {
             throw new ResourceNotFoundException("Não encontramos uma Matricula com esse identificador.");
         }
-        cursoRepository.deleteById(id);
+        matriculaRepository.deleteById(id);
     }
 }

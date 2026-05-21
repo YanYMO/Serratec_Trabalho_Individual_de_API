@@ -47,6 +47,7 @@ public class CursoController {
     }
 
     @PostMapping("/curso/{cursoId}/professor/{professorId}")
+    @Operation(summary = "Cadastra um Professor no Curso utilizando o ID de ambos", description = "A resposta é uma cópia dos dados que foram cadastrados.")
     public ResponseEntity<CursoResponseDTO> cadastrarProfessorCurso(@Valid @PathVariable Long cursoId, @PathVariable Long professorId) {
 
         CursoResponseDTO cursoDTO = cursoService.cadastrarProfessorCurso(cursoId, professorId);

@@ -40,6 +40,7 @@ public class MatriculaController {
     }
 
     @PostMapping
+    @Operation(summary = "Cadastra uma nova Matricula", description = "A resposta é uma confirmação 200 OK e o corpo do objeto atualizado.")
     public ResponseEntity<MatriculaResponseDTO> cadastrarMatricula(@Valid @RequestBody MatriculaRequestDTO matricula) {
 
         MatriculaResponseDTO matriculaDTO = matriculaService.cadastrarMatricula(matricula);
@@ -58,7 +59,7 @@ public class MatriculaController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deleta um Curso por ID", description = "A resposta é uma confirmação 204 NO CONTENT")
+    @Operation(summary = "Deleta uma Matricula por ID", description = "A resposta é uma confirmação 204 NO CONTENT")
     public ResponseEntity<Object> deletarPorId(@PathVariable Long id) {
         matriculaService.deletarPorId(id);
 

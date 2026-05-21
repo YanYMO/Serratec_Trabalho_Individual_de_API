@@ -15,6 +15,9 @@ public class MatriculaUpdateDTO {
         this.status = status;
     }
 
+    public MatriculaUpdateDTO() {
+    }
+
     public StatusMatricula getStatus() {
         return status;
     }
