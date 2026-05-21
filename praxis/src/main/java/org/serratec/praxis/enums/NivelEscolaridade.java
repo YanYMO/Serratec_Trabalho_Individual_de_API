@@ -34,15 +34,8 @@ public enum NivelEscolaridade {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
     public String getNivel() {
         return nivel;
     }
 
-    public void setNivel(String nivel) {
-        this.nivel = nivel;
-    }
 }

@@ -5,9 +5,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
-import org.serratec.praxis.domain.Curso;
 import org.serratec.praxis.enums.TipoCurso;
 
 import java.time.LocalDate;

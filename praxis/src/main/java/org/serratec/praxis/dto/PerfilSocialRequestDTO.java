@@ -3,7 +3,6 @@ package org.serratec.praxis.dto;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
-import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.enums.Genero;
 import org.serratec.praxis.enums.NivelEscolaridade;
 import org.serratec.praxis.enums.RendaFamiliar;

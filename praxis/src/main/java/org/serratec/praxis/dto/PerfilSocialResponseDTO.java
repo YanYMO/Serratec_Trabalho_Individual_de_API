@@ -1,11 +1,7 @@
 package org.serratec.praxis.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.domain.PerfilSocial;
-import org.serratec.praxis.enums.Genero;
-import org.serratec.praxis.enums.NivelEscolaridade;
-import org.serratec.praxis.enums.RendaFamiliar;
 
 @JsonPropertyOrder({
         "id",

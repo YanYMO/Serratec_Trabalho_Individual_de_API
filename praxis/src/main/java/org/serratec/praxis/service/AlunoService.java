@@ -6,7 +6,6 @@ import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.domain.PerfilSocial;
 import org.serratec.praxis.dto.AlunoRequestDTO;
 import org.serratec.praxis.dto.AlunoResponseDTO;
-import org.serratec.praxis.dto.AlunoUpdateDTO;
 import org.serratec.praxis.exception.DuplicateEntryException;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.AlunoRepository;

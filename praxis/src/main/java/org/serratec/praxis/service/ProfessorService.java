@@ -2,8 +2,6 @@ package org.serratec.praxis.service;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.serratec.praxis.domain.Aluno;
-import org.serratec.praxis.domain.PerfilSocial;
 import org.serratec.praxis.domain.Professor;
 import org.serratec.praxis.dto.*;
 import org.serratec.praxis.exception.DuplicateEntryException;

@@ -2,21 +2,15 @@ package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.serratec.praxis.domain.PerfilSocial;
-import org.serratec.praxis.domain.Professor;
 import org.serratec.praxis.dto.AlunoResponseDTO;
 import org.serratec.praxis.dto.PerfilSocialRequestDTO;
 import org.serratec.praxis.dto.PerfilSocialResponseDTO;
-import org.serratec.praxis.exception.ResourceNotFoundException;
-import org.serratec.praxis.repository.PerfilSocialRepository;
 import org.serratec.praxis.service.PerfilSocialService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/perfis-sociais")

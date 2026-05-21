@@ -2,7 +2,6 @@ package org.serratec.praxis.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import org.serratec.praxis.dto.AlunoRequestDTO;
 import org.serratec.praxis.dto.AlunoResponseDTO;
 import org.serratec.praxis.dto.ProfessorRequestDTO;
 import org.serratec.praxis.dto.ProfessorResponseDTO;

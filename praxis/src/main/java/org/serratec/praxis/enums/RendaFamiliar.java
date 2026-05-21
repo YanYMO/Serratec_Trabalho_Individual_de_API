@@ -33,15 +33,7 @@ public enum RendaFamiliar {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
-
     public String getRenda() {
         return renda;
-    }
-
-    public void setRenda(String rendaFamiliar) {
-        this.renda = rendaFamiliar;
     }
 }
