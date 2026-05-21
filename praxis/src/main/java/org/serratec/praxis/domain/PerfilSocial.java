@@ -1,6 +1,7 @@
 package org.serratec.praxis.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.serratec.praxis.enums.Genero;
@@ -9,6 +10,7 @@ import org.serratec.praxis.enums.RendaFamiliar;
 
 @Entity
 @Table(name = "perfil_social")
+@Schema(description = "Entidade que representa um Perfil Social")
 public class PerfilSocial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "aluno")
+@Schema(description = "Entidade que representa um Aluno")
 public class Aluno {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

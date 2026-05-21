@@ -2,6 +2,7 @@ package org.serratec.praxis.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "curso")
+@Schema(description = "Entidade que representa um Curso")
 public class Curso {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

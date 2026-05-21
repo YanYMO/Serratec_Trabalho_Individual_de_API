@@ -2,6 +2,7 @@ package org.serratec.praxis.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "professor")
+@Schema(description = "Entidade que representa um Professor")
 public class Professor {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

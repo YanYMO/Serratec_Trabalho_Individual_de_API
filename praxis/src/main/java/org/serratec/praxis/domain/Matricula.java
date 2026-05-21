@@ -1,6 +1,7 @@
 package org.serratec.praxis.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "matricula")
+@Schema(description = "Entidade que representa uma Matricula")
 public class Matricula {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
