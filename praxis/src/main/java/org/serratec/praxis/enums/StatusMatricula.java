@@ -16,6 +16,6 @@ public enum StatusMatricula {
             }
         }
         throw new EnumValidationException(
-                "Categoria inválida. Valores válidos: EAD, PRESENCIAL, SEMI_PRESENCIAL");
+                "Categoria inválida. Valores válidos: ATIVA, SUSPENSA, CANCELADA");
     }
 }

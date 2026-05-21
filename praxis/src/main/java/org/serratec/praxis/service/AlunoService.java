@@ -77,7 +77,7 @@ public class AlunoService {
     }
 
     @Transactional
-    public Aluno atualizar(@Valid Long id, AlunoRequestDTO alunoDTO) {
+    public AlunoResponseDTO atualizar(@Valid Long id, AlunoRequestDTO alunoDTO) {
         Aluno aluno = alunoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
 
@@ -91,19 +91,18 @@ public class AlunoService {
             throw new DuplicateEntryException("CPF já cadastrado");
         }
 
-        PerfilSocial perfil = new PerfilSocial();
-        perfil.setGenero(alunoDTO.getPerfilSocialRequestDTO().getGenero());
-        perfil.setEscolaridade(alunoDTO.getPerfilSocialRequestDTO().getNivelEscolaridade());
-        perfil.setRendaFamiliar(alunoDTO.getPerfilSocialRequestDTO().getRendaFamiliar());
-
         aluno.setNome(alunoDTO.getNome());
         aluno.setCpf(alunoDTO.getCpf());
         aluno.setEmail(alunoDTO.getEmail());
         aluno.setSenha(alunoDTO.getSenha());
         aluno.setDataNascimento(alunoDTO.getDataNascimento());
-        aluno.setPerfilSocial(perfil);
+        aluno.getPerfilSocial().setGenero(alunoDTO.getPerfilSocialRequestDTO().getGenero());
+        aluno.getPerfilSocial().setEscolaridade(alunoDTO.getPerfilSocialRequestDTO().getNivelEscolaridade());
+        aluno.getPerfilSocial().setRendaFamiliar(alunoDTO.getPerfilSocialRequestDTO().getRendaFamiliar());
 
-        return alunoRepository.save(aluno);
+        alunoRepository.save(aluno);
+
+        return new AlunoResponseDTO(aluno);
     }
 
     @Transactional

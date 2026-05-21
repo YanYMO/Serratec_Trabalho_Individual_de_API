@@ -36,9 +36,9 @@ public class CursoController {
 
     @PostMapping
     @Operation(summary = "Cadastra um novo Curso", description = "A resposta é uma cópia dos dados que foram cadastrados.")
-    public ResponseEntity<CursoResponseDTO> cadastrar(@Valid @RequestBody CursoRequestDTO curso) {
+    public ResponseEntity<CursoResponseDTO> cadastrarCurso(@Valid @RequestBody CursoRequestDTO curso) {
 
-        CursoResponseDTO cursoDTO = cursoService.cadastrar(curso);
+        CursoResponseDTO cursoDTO = cursoService.cadastrarCurso(curso);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}").buildAndExpand(cursoDTO.getId()).toUri();
@@ -46,8 +46,19 @@ public class CursoController {
         return ResponseEntity.created(uri).build();
     }
 
+    @PostMapping("/curso/{cursoId}/professor/{professorId}")
+    public ResponseEntity<CursoResponseDTO> cadastrarProfessorCurso(@Valid @PathVariable Long cursoId, @PathVariable Long professorId) {
+
+        CursoResponseDTO cursoDTO = cursoService.cadastrarProfessorCurso(cursoId, professorId);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(cursoDTO.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(cursoDTO);
+    }
+
     @PutMapping("/{id}")
-    @Operation(summary = "Atualiza um Curso por ID", description = "A resposta é uma confirmação 200 OK")
+    @Operation(summary = "Atualiza um Curso por ID", description = "A resposta é uma confirmação 200 OK e o corpo do objeto atualizado.")
     public ResponseEntity<CursoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody CursoRequestDTO cursoDTO) {
         cursoService.atualizar(id, cursoDTO);
 
@@ -56,7 +67,7 @@ public class CursoController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deleta um Curso por ID", description = "A resposta é uma confirmação 204 NO CONTENT")
-    public ResponseEntity<Object> deleteById(@PathVariable Long id) {
+    public ResponseEntity<Object> deletarPorId(@PathVariable Long id) {
         cursoService.deletarPorId(id);
 
         return ResponseEntity.noContent().build();

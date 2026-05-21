@@ -3,10 +3,12 @@ package org.serratec.praxis.service;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.serratec.praxis.domain.Curso;
+import org.serratec.praxis.domain.Professor;
 import org.serratec.praxis.dto.CursoRequestDTO;
 import org.serratec.praxis.dto.CursoResponseDTO;
 import org.serratec.praxis.exception.ResourceNotFoundException;
 import org.serratec.praxis.repository.CursoRepository;
+import org.serratec.praxis.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class CursoService {
 
     @Autowired
     CursoRepository cursoRepository;
+    @Autowired
+    ProfessorRepository professorRepository;
 
     public List<CursoResponseDTO> findAll() {
         List<Curso> cursos = cursoRepository.findAll();
@@ -44,7 +48,7 @@ public class CursoService {
     }
 
     @Transactional
-    public CursoResponseDTO cadastrar(@Valid CursoRequestDTO cursoDTO) {
+    public CursoResponseDTO cadastrarCurso(@Valid CursoRequestDTO cursoDTO) {
 
         Curso curso = new Curso();
         curso.setNome(cursoDTO.getNome());
@@ -61,7 +65,20 @@ public class CursoService {
     }
 
     @Transactional
-    public Curso atualizar(@Valid Long id, CursoRequestDTO cursoDTO) {
+    public CursoResponseDTO cadastrarProfessorCurso(@Valid Long idCurso, Long idProfessor) {
+        Curso curso = cursoRepository.findById(idCurso)
+                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
+        Professor professor = professorRepository.findById(idProfessor)
+                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
+
+        curso.getProfessores().add(professor);
+        cursoRepository.save(curso);
+
+        return new CursoResponseDTO(curso);
+    }
+
+    @Transactional
+    public CursoResponseDTO atualizar(@Valid Long id, CursoRequestDTO cursoDTO) {
         Curso curso = cursoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
 
@@ -71,7 +88,9 @@ public class CursoService {
         curso.setDuracaoEmHoras(cursoDTO.getDuracaoEmHoras());
         curso.setTipo(cursoDTO.getTipo());
 
-        return cursoRepository.save(curso);
+        cursoRepository.save(curso);
+
+        return new CursoResponseDTO(curso);
     }
 
     @Transactional

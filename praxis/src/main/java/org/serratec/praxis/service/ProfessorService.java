@@ -69,7 +69,7 @@ public class ProfessorService {
     }
 
     @Transactional
-    public Professor atualizar(@Valid Long id, ProfessorRequestDTO professorDTO) {
+    public ProfessorResponseDTO atualizar(@Valid Long id, ProfessorRequestDTO professorDTO) {
         Professor professor = professorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Professor com esse identificador."));
 
@@ -89,7 +89,9 @@ public class ProfessorService {
         professor.setSenha(professorDTO.getSenha());
         professor.setDataNascimento(professorDTO.getDataNascimento());
 
-        return professorRepository.save(professor);
+        professorRepository.save(professor);
+
+        return new ProfessorResponseDTO(professor);
     }
 
     @Transactional

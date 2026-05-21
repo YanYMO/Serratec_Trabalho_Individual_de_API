@@ -49,11 +49,11 @@ public class ProfessorController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualiza um Professor por ID", description = "A resposta é uma confirmação 200 OK")
-    public ResponseEntity<AlunoResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody ProfessorRequestDTO professorDTO) {
-        professorService.atualizar(id, professorDTO);
+    @Operation(summary = "Atualiza um Professor por ID", description = "A resposta é uma confirmação 200 OK e o corpo do objeto atualizado.")
+    public ResponseEntity<ProfessorResponseDTO> atualizar(@Valid @PathVariable Long id, @RequestBody ProfessorRequestDTO professorDTO) {
 
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok().body(professorService.atualizar(id, professorDTO));
     }
 
     @DeleteMapping("/{id}")

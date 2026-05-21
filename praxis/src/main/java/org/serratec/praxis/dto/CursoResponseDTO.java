@@ -1,6 +1,7 @@
 package org.serratec.praxis.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.serratec.praxis.domain.Aluno;
 import org.serratec.praxis.domain.Curso;
 import org.serratec.praxis.domain.Matricula;
 import org.serratec.praxis.domain.Professor;
@@ -30,7 +31,7 @@ public class CursoResponseDTO {
     private Integer duracaoEmHoras;
     private TipoCurso tipo;
     private List<String> professores;
-    private List<Integer> matriculas;
+    private List<String> alunos;
 
     public CursoResponseDTO() {
         super();
@@ -45,8 +46,8 @@ public class CursoResponseDTO {
         this.tipo = curso.getTipo();
         this.professores = curso.getProfessores() == null ? Collections.emptyList() :
                 curso.getProfessores().stream().map(Professor::getNome).toList();
-        this.matriculas = curso.getMatriculas()== null ? Collections.emptyList() :
-                curso.getMatriculas().stream().map(Matricula::getCodigo).toList();
+        this.alunos = curso.getMatriculas() == null ? Collections.emptyList() :
+                curso.getMatriculas().stream().map(Matricula::getAluno).map(Aluno::getNome).toList();
     }
 
     public Long getId() {
@@ -105,11 +106,11 @@ public class CursoResponseDTO {
         this.professores = professores;
     }
 
-    public List<Integer> getMatriculas() {
-        return matriculas;
+    public List<String> getMatriculas() {
+        return alunos;
     }
 
-    public void setMatriculas(List<Integer> matriculas) {
-        this.matriculas = matriculas;
+    public void setMatriculas(List<String> matriculas) {
+        this.alunos = matriculas;
     }
 }

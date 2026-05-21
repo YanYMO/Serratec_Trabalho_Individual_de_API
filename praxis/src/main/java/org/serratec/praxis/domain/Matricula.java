@@ -18,14 +18,14 @@ public class Matricula {
 
     @NotNull(message = "O campo precisa ser preenchido")
     @Max(99999)
-    @Column(name = "codigo", nullable = false, length = 99999)
+    @Column(name = "codigo", nullable = false, length = 99999, unique = true)
     private Integer codigo;
 
     @CreationTimestamp
     @Column(name = "data_de_matricula", updatable = false)
-    private LocalDate dataMAtricula;
+    private LocalDate dataMatricula;
 
-    @NotBlank(message = "O campo precisa ser preenchido")
+    @NotNull(message = "O campo precisa ser preenchido")
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private StatusMatricula status;
@@ -38,10 +38,10 @@ public class Matricula {
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
 
-    public Matricula(Long id, Integer codigo, LocalDate dataMAtricula, StatusMatricula status, Aluno aluno, Curso curso) {
+    public Matricula(Long id, Integer codigo, LocalDate dataMatricula, StatusMatricula status, Aluno aluno, Curso curso) {
         this.id = id;
         this.codigo = codigo;
-        this.dataMAtricula = dataMAtricula;
+        this.dataMatricula = dataMatricula;
         this.status = status;
         this.aluno = aluno;
         this.curso = curso;
@@ -66,12 +66,12 @@ public class Matricula {
         this.codigo = codigo;
     }
 
-    public LocalDate getDataMAtricula() {
-        return dataMAtricula;
+    public LocalDate getDataMatricula() {
+        return dataMatricula;
     }
 
-    public void setDataMAtricula(LocalDate dataMAtricula) {
-        this.dataMAtricula = dataMAtricula;
+    public void setDataMatricula(LocalDate dataMAtricula) {
+        this.dataMatricula = dataMatricula;
     }
 
     public StatusMatricula getStatus() {

@@ -27,7 +27,7 @@ public class PerfilSocialController {
     }
 
     @PutMapping("/aluno/{IdAluno}")
-    @Operation(summary = "Atualiza o Perfil Social", description = "A resposta é o Aluno com os dados de perfil atualizados.")
+    @Operation(summary = "Atualiza o Perfil Social", description = "A resposta é uma confirmação 200 OK e o corpo do objeto atualizado.")
     public ResponseEntity<AlunoResponseDTO> atualizarPerfil(@Valid @PathVariable Long IdAluno, @RequestBody PerfilSocialRequestDTO perfilDTO) {
 
         return ResponseEntity.ok(perfilSocialService.atualizarPerfil(IdAluno, perfilDTO));
