@@ -6,6 +6,7 @@ import org.serratec.praxis.enums.Genero;
 import org.serratec.praxis.enums.NivelEscolaridade;
 import org.serratec.praxis.enums.RendaFamiliar;
 
+@Schema(description = "Dados necessários para cadastrar ou atualizar o perfil de um Aluno")
 public class PerfilSocialRequestDTO {
 
     @NotNull(message = "O campo precisa ser preenchido")

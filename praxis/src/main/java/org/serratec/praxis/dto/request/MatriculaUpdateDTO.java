@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import org.serratec.praxis.enums.StatusMatricula;
 
+@Schema(description = "Dados necessários para atualizar uma Matrícula")
 public class MatriculaUpdateDTO {
 
     @NotNull(message = "O campo precisa ser preenchido")

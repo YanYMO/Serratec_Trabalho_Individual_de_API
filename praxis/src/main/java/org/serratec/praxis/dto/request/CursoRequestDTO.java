@@ -9,6 +9,7 @@ import org.serratec.praxis.enums.TipoCurso;
 
 import java.time.LocalDate;
 
+@Schema(description = "Dados necessários para cadastrar ou atualizar um Curso")
 public class CursoRequestDTO {
 
     @NotBlank(message = "O campo precisa ser preenchido")

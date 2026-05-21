@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import org.serratec.praxis.enums.StatusMatricula;
 
+@Schema(description = "Dados necessários para cadastrar uma Matricula")
 public class MatriculaRequestDTO {
 
     @NotNull(message = "O campo precisa ser preenchido")

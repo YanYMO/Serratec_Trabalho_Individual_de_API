@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
+@Schema(description = "Dados necessários para cadastrar ou atualizar um Aluno")
 public class AlunoRequestDTO {
 
     @NotBlank(message = "O campo precisa ser preenchido")
