@@ -100,7 +100,7 @@ public class CursoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
 
         if (!curso.getMatriculas().isEmpty()) {
-            throw new DuplicateEntryException("Não é possível deletar um Curso com matrículas ativas.");
+            throw new ResourceNotFoundException("Não é possível deletar um Curso com matrículas ativas.");
         }
         cursoRepository.deleteById(id);
     }

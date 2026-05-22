@@ -119,7 +119,7 @@ public class AlunoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
 
         if (!aluno.getMatriculas().isEmpty()) {
-            throw new DuplicateEntryException("Não é possível deletar um Aluno com matrículas ativas.");
+            throw new ResourceNotFoundException("Não é possível deletar um Aluno com matrículas ativas.");
         }
         alunoRepository.deleteById(id);
     }

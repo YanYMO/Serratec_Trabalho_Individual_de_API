@@ -55,7 +55,7 @@ public class MatriculaService {
     @Transactional
     public MatriculaResponseDTO cadastrarMatricula(@Valid MatriculaRequestDTO matriculaDTO) {
         Aluno aluno = alunoRepository.findById(matriculaDTO.getAlunoId())
-                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos uma Aluno com esse identificador."));
+                .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Aluno com esse identificador."));
 
         Curso curso = cursoRepository.findById(matriculaDTO.getCursoId())
                 .orElseThrow(() -> new ResourceNotFoundException("Não encontramos um Curso com esse identificador."));
